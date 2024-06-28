@@ -1,9 +1,6 @@
 import {
-  createBrowserRouter,
   createHashRouter,
   RouterProvider,
-  Route,
-  Link,
 } from "react-router-dom";
 import Layout from "./routes/layout/Layout";
 import HomePage from "./routes/homePage/HomePage";
@@ -47,8 +44,7 @@ function App() {
     }
   ])
   return (
-    <RouterProvider router={router}>
-    </RouterProvider>
+    <RouterProvider router={router} />
   )
 }
 export default App
