@@ -1,5 +1,6 @@
 import React from 'react'
 import './filter.css'
+import search from '../../../public/search.png'
 function Filter() {
   return (
     <div className="filter">
@@ -62,7 +63,7 @@ function Filter() {
           />
         </div>
         <button>
-          <img src="/public/search.png" alt="" />
+          <img src={search} alt="" />
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './slider.css'
+import arrow from '../../../public/arrow.png'
 function Slider({ images }) 
     {
         const [imageIndex, setImageIndex] = useState(null);
@@ -25,13 +26,13 @@ function Slider({ images })
             {imageIndex !== null && (
               <div className="fullSlider">
                 <div className="arrow" onClick={() => changeSlide("left")}>
-                  <img src="/arrow.png" alt="" />
+                  <img src={arrow}alt="" />
                 </div>
                 <div className="imgContainer">
                   <img src={images[imageIndex]} alt="" />
                 </div>
                 <div className="arrow" onClick={() => changeSlide("right")}>
-                  <img src="/arrow.png" className="right" alt="" />
+                  <img src={arrow} className="right" alt="" />
                 </div>
                 <div className="close" onClick={() => setImageIndex(null)}>
                   X

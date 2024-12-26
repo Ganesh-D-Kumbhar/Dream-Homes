@@ -37,8 +37,9 @@
       font-size: larger;
       font-weight: bold;
     }
-  pre{
-    font-size: larger;
+  p{
+    font-size: large;
+    text-align: center;
   }
     .details {
       flex: 3;
@@ -243,5 +244,30 @@
           }
         }
       }
+    }
+  }
+
+  .bottom h2{
+    text-align: center;
+  }
+  .singlePage .features .title{
+    background-color: #fece51;
+    padding: 5px 0;
+  }
+  @media (max-width: 480px) {
+    .singlePage .features .title{
+      font-size: large !important;
+    }
+    .singlePage .post h1{
+      font-size: larger !important;
+      text-align: center;
+    }
+    .singlePage .features .sizes{
+      flex-direction: column;
+      font-weight: bold;
+    }
+    .singlePage .listHorizontal{
+      flex-direction: column !important;
+      gap: 25px;
     }
   }

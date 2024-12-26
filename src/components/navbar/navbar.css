@@ -3,8 +3,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  a {
+  .link {
     transition: all 0.4s ease;
 
     @media (max-width: 738px) {
@@ -12,16 +11,19 @@ nav {
     }
 
     &:hover {
-      scale: 1.05;
+      scale: 1.1;
+      color: red;
     }
   }
-
+.link.active{
+  color: red !important;;
+}
   .left {
     flex: 3;
     display: flex;
     align-items: center;
     gap: 50px;
-
+    font-weight: bold;
     .logo {
       font-weight: bold;
       font-size: 20px;
@@ -49,7 +51,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: #fcf5f3;
+    background-color: rgb(252, 245, 243);
     height: 100%;
 
     @media (max-width: 1024px) {
@@ -125,23 +127,26 @@ nav {
 
     .menu {
       position: absolute;
+      z-index: 1;
       top: 0;
       right: -50%;
       background-color: black;
-      color: white;
+      color: white !important;
       height: 100vh;
       width: 50%;
-      transition: all 1s ease;
+      /* transition: all 1s ease; */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 15px;
 
       &.active {
         right: 0;
       }
-
+      a{
+        color: white;
+      }
       @media (max-width: 738px){
         a {
           display: initial;
@@ -149,4 +154,7 @@ nav {
       }
     }
   }
+}
+@media (max-width: 480px) {
+  
 }

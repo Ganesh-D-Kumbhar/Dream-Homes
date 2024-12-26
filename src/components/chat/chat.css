@@ -11,14 +11,15 @@
       overflow-y: scroll;
       h1 {
         font-size: large;
-        width: 33.2vw;
+        width: 35.6vw;
         background-color: #fece51;
         font-weight: 400;
         position: fixed;
         padding: 10px;
+        z-index: 1;
       }
   
-      .message {
+      .message { 
         background-color: white;
         padding: 5px;
         border-radius: 10px;
@@ -147,4 +148,7 @@
       }
     }
   }
-  
+  .own p {
+    overflow-wrap: break-word;
+    word-break: keep-all !important;
+  }

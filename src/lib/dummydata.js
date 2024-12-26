@@ -110,8 +110,8 @@ export const singlePostData = {
   school: "250m away",
   bus: "100m away",
   restaurant: "50m away",
-  descriptionTitle: `Modern Apartment in Atpadi - Samarth City: Your Ideal Home!`,
-  descriptionPhrase: "Make your dreams true with 'Dream Homes'"
+  descriptionTitle: `Modern Atpadi - Samarth City: Your Ideal Home!`,
+  descriptionPhrase: "Make your dreams true with "
 };
 
 export const userData = {
