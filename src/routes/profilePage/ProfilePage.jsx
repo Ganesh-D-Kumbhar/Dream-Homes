@@ -5,7 +5,7 @@ import "./profilePage.css";
 import profile from "../../assets/profile.jpg";
 function ProfilePage() {
   return (
-    <div className="profilePage">
+    <div className="profilePage mt-20">
       <div className="details">
         <div className="wrapper">
           <div className="info">
