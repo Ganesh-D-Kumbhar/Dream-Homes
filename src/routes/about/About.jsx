@@ -10,7 +10,7 @@ export default function About() {
 
   return (
     <>
-      <div className="aboutContainer">
+      <div className="aboutContainer mt-32 overflow-y-auto h-[100vh]">
         <div className="box">
           <div className="information mob">
             <div className="welcome-container">

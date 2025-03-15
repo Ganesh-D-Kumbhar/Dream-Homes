@@ -16,7 +16,7 @@ import save from '../../../public/save.png'
 import school from '../../../public/school.png'
 function SinglePage() {
   return (
-    <div className="singlePage">
+    <div className="singlePage mt-32">
       <div className="details">
         <div className="wrapper">
           <Slider images={singlePostData.images} />

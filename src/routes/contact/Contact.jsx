@@ -15,7 +15,7 @@ export default function Contact() {
 
   return (
     <>
-      <div className="contactContainer">
+      <div className="contactContainer mt-32 overflow-y-auto h-[100vh]">
         <div className="contactContent">
           <h1>Connect with Dream Homes</h1>
           <p>

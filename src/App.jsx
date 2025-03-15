@@ -15,41 +15,42 @@ function App() {
   const router = createHashRouter([
     {
       path: "/",
-      element:<Layout/>,
-      children:[
-        {path:'/home',
-      element:<HomePage/>
-    },
-    {
-      path:'/list',
-      element:<ListPage/>
-    },
-    {
-      path:'/:id',
-      element:<SinglePage/>
-    },
-    {
-      path:'/',
-      element:<Register/>
-    
-    },
-    {
-      path:'/profile',
-      element:<ProfilePage/>
-    
-    },
-    {
-      path:'/login',
-      element:<Login/>
-    },
-    {
-      path:'/about',
-      element: <About/>
-    },
-    {
-      path:'/contact',
-      element: <Contact/>
-    },
+      element: <Layout />,
+      children: [
+        {
+          path: '/home',
+          element: <HomePage />
+        },
+        {
+          path: '/list',
+          element: <ListPage />
+        },
+        {
+          path: '/:id',
+          element: <SinglePage />
+        },
+        {
+          path: '/',
+          element: <Register />
+
+        },
+        {
+          path: '/profile',
+          element: <ProfilePage />
+
+        },
+        {
+          path: '/login',
+          element: <Login />
+        },
+        {
+          path: '/about',
+          element: <About />
+        },
+        {
+          path: '/contact',
+          element: <Contact />
+        },
       ]
     }
   ])

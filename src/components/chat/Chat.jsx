@@ -41,10 +41,10 @@ function Chat() {
   };
 
   return (
-    <div className="chat">
+    <div className="chat h-[80vh] overflow-y-auto ">
       <div className="messages">
-        <h1>Messages</h1>
-        <br />
+        {/* <h1>Messages</h1> */}
+        {/* <br /> */}
         <br />
         {users.map(user => {
           const lastMessage = messages[user.id]?.slice(-1)[0];

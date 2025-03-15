@@ -19,7 +19,7 @@ function SearchBar() {
           <button
             key={type}
             onClick={() => switchType(type)}
-            className={query.type === type ? "active" : ""}
+            className={`${query.type === type ? "active" : ""} text-black`}
           >
             {type}
           </button>
@@ -41,7 +41,7 @@ function SearchBar() {
           max={1000000000}
           placeholder="Max price"
         />
-        <button>
+        <button className="flex items-center justify-center bg-yellow-500">
           <img src={search} alt="" />
         </button>
       </form>

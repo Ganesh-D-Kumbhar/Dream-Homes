@@ -8,7 +8,7 @@ function Layout() {
         <div className="navbar">
             <Navbar/>
         </div>
-        <div className="content">
+        <div className="content !overflow-hidden">
             <Outlet/>
         </div>
     </div>
