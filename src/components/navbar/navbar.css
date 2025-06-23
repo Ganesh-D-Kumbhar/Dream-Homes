@@ -1,0 +1,160 @@
+nav {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .link {
+    transition: all 0.4s ease;
+
+    @media (max-width: 738px) {
+      display: none;
+    }
+
+    &:hover {
+      scale: 1.1;
+      color: red;
+    }
+  }
+.link.active{
+  color: red !important;;
+}
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-weight: bold;
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        width: 28px;
+      }
+
+      span {
+        @media (max-width: 1024px) {
+          display: none;
+        }
+
+        @media (max-width: 738px) {
+          display: initial;
+        }
+      }
+    }
+  }
+  .right {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: rgb(252, 245, 243);
+    height: 100%;
+
+    @media (max-width: 1024px) {
+      background-color: transparent;
+    }
+
+    a {
+      padding: 12px 24px;
+      margin: 20px;
+    }
+
+    .user{
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+
+      span{
+        @media (max-width: 738px){
+          display: none;
+        }
+      }
+
+      .profile{
+        padding: 12px 24px;
+        background-color: #fece51;
+        cursor: pointer;
+        border: none;
+        position: relative;
+        
+        .notification{
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          width: 26px;
+          height: 26px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+      }
+    }
+
+    .register {
+      background-color: #fece51;
+    }
+
+    .menuIcon {
+      display: none;
+      z-index: 999;
+
+      img {
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 738px) {
+        display: inline;
+      }
+    }
+
+    .menu {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: -50%;
+      background-color: black;
+      color: white !important;
+      height: 100vh;
+      width: 50%;
+      /* transition: all 1s ease; */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+
+      &.active {
+        right: 0;
+      }
+      a{
+        color: white;
+      }
+      @media (max-width: 738px){
+        a {
+          display: initial;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  
+}
