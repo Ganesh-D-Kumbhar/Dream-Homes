@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/Button.jsx"
+import { Input } from "@/components/ui/Input.jsx"
+import { Badge } from "@/components/ui/Badge.jsx"
+import { Card } from "@/components/ui/Card.jsx"
 import { Search, SlidersHorizontal, MapPin, Home, DollarSign, Filter, X, ChevronDown } from "lucide-react"
 
 export default function PropertyFilters({ filters, onFiltersChange }) {
