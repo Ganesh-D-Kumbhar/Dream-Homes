@@ -2,33 +2,59 @@
 <html lang="en">
 
 <head>
+  <!-- Meta basics -->
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/logo.png" />
-  <link rel="icon"
-    href="https://icon2.cleanpng.com/20180405/the/kisspng-computer-icons-house-icon-design-clip-art-j-5ac6922e858bc5.614981811522962990547.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Explore Dream Homes for luxury living and exclusive properties. Find your perfect property with our expert real estate services and start your journey to a new home today.">
 
-  <title>Dream Homes</title>
+  <!-- SEO: Title & Description -->
+  <title>Dream Homes - Find Your Perfect Property in Pune | Real Estate Portal</title>
+  <meta name="description"
+    content="Explore Dream Homes - a modern real estate platform offering premium properties in Pune with interactive maps, real-time chat, and smart filters. Find your dream property today." />
+  <meta name="keywords"
+    content="Dream Homes, real estate Pune, property for sale Pune, buy home Pune, real estate app, property finder, Pune homes, housing Pune" />
+  <meta name="author" content="Ganesh Kumbhar" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://dream-homes-alpha.vercel.app/" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="/dream-homes-logo.webp" />
+
+  <!-- Open Graph (Facebook & LinkedIn) -->
+  <meta property="og:title" content="Dream Homes - Find Your Perfect Property in Pune" />
+  <meta property="og:description"
+    content="Search, explore, and find your perfect home in Pune. Modern, fast, and responsive real estate platform." />
+  <meta property="og:image" content="https://dream-homes-alpha.vercel.app/og-image.jpg" />
+  <meta property="og:url" content="https://dream-homes-alpha.vercel.app/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dream Homes - Find Your Perfect Property in Pune" />
+  <meta name="twitter:description"
+    content="Search, explore, and find your perfect home in Pune. Fast, interactive, and built with React" />
+  <meta name="twitter:image" content="https://dream-homes-alpha.vercel.app/og-image.jpg" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Dream Homes",
+      "url": "https://www.yourdomain.com/",
+      "author": {
+        "@type": "Person",
+        "name": "Ganesh Kumbhar"
+      },
+      "description": "Dream Homes is a modern real estate platform offering premium properties in Pune with maps, messaging, and more."
+    }
+    </script>
 </head>
 
 <body>
   <div id="root"></div>
-  <script type="module" src="./src/main.jsx"> </script>
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/676d2a0049e2fd8dfefe22e2/1ig16o5gu';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
-  </script>
-  <!--End of Tawk.to Script-->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>
