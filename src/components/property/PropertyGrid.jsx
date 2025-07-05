@@ -1,7 +1,6 @@
 import { motion } from "framer-motion"
 import PropertyCard from "./PropertyCard.jsx"
 
-
 export default function PropertyGrid({ properties }) {
   if (properties.length === 0) {
     return (

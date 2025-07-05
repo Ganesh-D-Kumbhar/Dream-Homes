@@ -1,6 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react"
-import toast from "react-hot-toast"
-
 const AuthContext = createContext(undefined)
 
 export function AuthProvider({ children }) {
@@ -79,21 +77,6 @@ export function AuthProvider({ children }) {
     setUser(null)
     setIsAuthenticated(false)
     localStorage.removeItem("user")
-
-    toast.success("👋 Logged out successfully! See you soon!", {
-      duration: 3000,
-      style: {
-        background: "#3B82F6",
-        color: "#fff",
-        fontWeight: "600",
-        borderRadius: "12px",
-        padding: "16px",
-      },
-      iconTheme: {
-        primary: "#fff",
-        secondary: "#3B82F6",
-      },
-    })
   }
 
   const updateProfile = (userData) => {
@@ -109,17 +92,6 @@ export function AuthProvider({ children }) {
         users[userIndex] = { ...users[userIndex], ...userData }
         localStorage.setItem("users", JSON.stringify(users))
       }
-
-      toast.success("✅ Profile updated successfully!", {
-        duration: 3000,
-        style: {
-          background: "#10B981",
-          color: "#fff",
-          fontWeight: "600",
-          borderRadius: "12px",
-          padding: "16px",
-        },
-      })
     }
   }
 

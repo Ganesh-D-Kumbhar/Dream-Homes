@@ -50,7 +50,7 @@ export default function SignupForm({ onSuccess, setIsLoading }) {
       const success = await signup(userData)
 
       if (success) {
-        toast.success("🎉 Account created successfully! Welcome to Elite Properties!", {
+        toast.success("🎉 Account created successfully! Welcome to Dream Homes!", {
           duration: 5000,
           style: {
             background: "#10B981",

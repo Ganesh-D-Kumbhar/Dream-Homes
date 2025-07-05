@@ -121,7 +121,7 @@ export default function AuthPage({ onAuthSuccess }) {
                 </div>
               </div>
               <div>
-                <h1 className="text-4xl xl:text-5xl font-bold text-gradient mb-2">Elite Properties</h1>
+                <h1 className="text-4xl xl:text-5xl font-bold text-gradient mb-2">Dream Homes</h1>
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-gold-500" />
                   <span className="text-slate-600 dark:text-slate-400 font-medium">Premium Real Estate Platform</span>
@@ -255,7 +255,7 @@ export default function AuthPage({ onAuthSuccess }) {
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gradient">Elite Properties</h1>
+                  <h1 className="text-2xl font-bold text-gradient">Dream Homes</h1>
                   <div className="flex items-center gap-1 justify-center">
                     <Sparkles className="w-3 h-3 text-gold-500" />
                     <span className="text-xs text-slate-500 dark:text-slate-400">Premium Real Estate</span>
@@ -277,7 +277,7 @@ export default function AuthPage({ onAuthSuccess }) {
                       transition={{ duration: 0.5 }}
                       className="text-3xl font-bold text-slate-800 dark:text-white mb-2"
                     >
-                      {isLogin ? "Welcome Back!" : "Join Elite Properties"}
+                      {isLogin ? "Welcome Back!" : "Join Dream Homes"}
                     </motion.h2>
                     <p className="text-slate-600 dark:text-slate-400">
                       {isLogin ? "Sign in to access your account" : "Create your account to get started"}
