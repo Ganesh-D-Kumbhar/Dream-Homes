@@ -1,169 +1,14 @@
-// import { useState } from "react"
-// import { useForm } from "react-hook-form"
-// import { yupResolver } from "@hookform/resolvers/yup"
-// import * as yup from "yup"
-// import { motion } from "framer-motion"
-// import { Button } from "../ui/Button.jsx"
-// import { Input } from "../ui/Input.jsx"
-// import { Label } from "../ui/Label.jsx"
-// import { Eye, EyeOff, Loader2 } from "lucide-react"
-// import { useAuth } from "../../context/AuthContext.jsx"
-
-// const schema = yup.object({
-//   name: yup.string().required("Name is required"),
-//   email: yup.string().email("Invalid email").required("Email is required"),
-//   phone: yup.string().matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
-//   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-//   confirmPassword: yup
-//     .string()
-//     .oneOf([yup.ref("password")], "Passwords must match")
-//     .required("Confirm password is required"),
-// })
-
-
-// export default function SignupForm({ onSuccess }) {
-//   const [showPassword, setShowPassword] = useState(false)
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-//   const [isLoading, setIsLoading] = useState(false)
-//   const { signup } = useAuth()
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm({
-//     resolver: yupResolver(schema),
-//   })
-
-//   const onSubmit = async (data) => {
-//     setIsLoading(true)
-//     const { confirmPassword, ...userData } = data
-//     const success = await signup(userData)
-//     setIsLoading(false)
-
-//     if (success) {
-//       onSuccess()
-//     }
-//   }
-
-//   return (
-//     <motion.form
-//       initial={{ opacity: 0 }}
-//       animate={{ opacity: 1 }}
-//       onSubmit={handleSubmit(onSubmit)}
-//       className="space-y-4"
-//     >
-//       <div>
-//         <Label htmlFor="name">Full Name</Label>
-//         <Input
-//           id="name"
-//           type="text"
-//           placeholder="Enter your full name"
-//           {...register("name")}
-//           className={errors.name ? "border-red-500" : ""}
-//         />
-//         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-//       </div>
-
-//       <div>
-//         <Label htmlFor="email">Email</Label>
-//         <Input
-//           id="email"
-//           type="email"
-//           placeholder="Enter your email"
-//           {...register("email")}
-//           className={errors.email ? "border-red-500" : ""}
-//         />
-//         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-//       </div>
-
-//       <div>
-//         <Label htmlFor="phone">Phone Number</Label>
-//         <Input
-//           id="phone"
-//           type="tel"
-//           placeholder="Enter your phone number"
-//           {...register("phone")}
-//           className={errors.phone ? "border-red-500" : ""}
-//         />
-//         {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-//       </div>
-
-//       <div>
-//         <Label htmlFor="password">Password</Label>
-//         <div className="relative">
-//           <Input
-//             id="password"
-//             type={showPassword ? "text" : "password"}
-//             placeholder="Enter your password"
-//             {...register("password")}
-//             className={errors.password ? "border-red-500" : ""}
-//           />
-//           <Button
-//             type="button"
-//             variant="ghost"
-//             size="sm"
-//             className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-//             onClick={() => setShowPassword(!showPassword)}
-//           >
-//             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-//           </Button>
-//         </div>
-//         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-//       </div>
-
-//       <div>
-//         <Label htmlFor="confirmPassword">Confirm Password</Label>
-//         <div className="relative">
-//           <Input
-//             id="confirmPassword"
-//             type={showConfirmPassword ? "text" : "password"}
-//             placeholder="Confirm your password"
-//             {...register("confirmPassword")}
-//             className={errors.confirmPassword ? "border-red-500" : ""}
-//           />
-//           <Button
-//             type="button"
-//             variant="ghost"
-//             size="sm"
-//             className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-//             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-//           >
-//             {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-//           </Button>
-//         </div>
-//         {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
-//       </div>
-
-//       <Button type="submit" className="w-full" disabled={isLoading}>
-//         {isLoading ? (
-//           <>
-//             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//             Creating Account...
-//           </>
-//         ) : (
-//           "Create Account"
-//         )}
-//       </Button>
-//     </motion.form>
-//   )
-// }
-
-
-
-
-
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Button } from "../ui/Button.jsx"
 import { Input } from "../ui/Input.jsx"
 import { Label } from "../ui/Label.jsx"
-import { Eye, EyeOff, Loader2, Mail, Lock, User, Phone, UserPlus } from "lucide-react"
-import { useAuth } from "../../context/AuthContext"
-import { toast } from "react-hot-toast"
+import { Eye, EyeOff, Loader2, User, Mail, Phone, Lock, ArrowRight, CheckCircle } from "lucide-react"
+import { useAuth } from "../../context/AuthContext.jsx"
+import toast from "react-hot-toast"
 
 const schema = yup.object({
   name: yup.string().required("Name is required"),
@@ -176,312 +21,321 @@ const schema = yup.object({
     .required("Confirm password is required"),
 })
 
-
-export default function SignupForm({ onSuccess }) {
+export default function SignupForm({ onSuccess, setIsLoading }) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { signup } = useAuth()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = async (data) => {
-    setIsLoading(true)
-    const { confirmPassword, ...userData } = data
-    const success = await signup(userData)
-    setIsLoading(false)
+  const password = watch("password")
 
-    if (success) {
-      toast.success("Account created successfully!", {
-        duration: 3000,
+  const onSubmit = async (data) => {
+    setIsSubmitting(true)
+    setIsLoading(true)
+
+    try {
+      // Add a small delay for better UX
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
+      const { confirmPassword, ...userData } = data
+      const success = await signup(userData)
+
+      if (success) {
+        toast.success("🎉 Account created successfully! Welcome to Dream Homes!", {
+          duration: 5000,
+          style: {
+            background: "#10B981",
+            color: "#fff",
+            fontWeight: "600",
+            borderRadius: "12px",
+            padding: "16px",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#10B981",
+          },
+        })
+        onSuccess()
+      } else {
+        toast.error("❌ Account creation failed! Email might already exist.", {
+          duration: 4000,
+          style: {
+            background: "#EF4444",
+            color: "#fff",
+            fontWeight: "600",
+            borderRadius: "12px",
+            padding: "16px",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#EF4444",
+          },
+        })
+      }
+    } catch (error) {
+      toast.error("🚨 Something went wrong! Please try again.", {
+        duration: 4000,
         style: {
-          background: "#f59e0b",
+          background: "#EF4444",
           color: "#fff",
+          fontWeight: "600",
+          borderRadius: "12px",
+          padding: "16px",
         },
       })
-      onSuccess()
-    } else {
-      toast.error("Failed to create account. Please try again.", {
-        duration: 3000,
-        style: {
-          background: "#ef4444",
-          color: "#fff",
-        },
-      })
+    } finally {
+      setIsSubmitting(false)
+      setIsLoading(false)
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.08,
-      },
-    },
+  const getPasswordStrength = (password) => {
+    if (!password) return { strength: 0, label: "", color: "" }
+    if (password.length < 6) return { strength: 25, label: "Weak", color: "bg-red-500" }
+    if (password.length < 8) return { strength: 50, label: "Fair", color: "bg-yellow-500" }
+    if (password.length < 12) return { strength: 75, label: "Good", color: "bg-blue-500" }
+    return { strength: 100, label: "Strong", color: "bg-green-500" }
   }
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  }
-
-  const errorVariants = {
-    hidden: { opacity: 0, y: -10, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.3, ease: "easeOut" },
-    },
-    exit: {
-      opacity: 0,
-      y: -10,
-      scale: 0.95,
-      transition: { duration: 0.2 },
-    },
-  }
+  const passwordStrength = getPasswordStrength(password)
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="w-full max-w-md mx-auto">
-      <motion.div variants={itemVariants} className="text-center mb-8">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
-        >
-          <UserPlus className="w-8 h-8 text-white" />
-        </motion.div>
-        <h2 className="text-2xl font-bold text-black dark:text-white">Create Account</h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">Join us today and get started</p>
-      </motion.div>
+    <motion.form
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+    >
+      <div>
+        <Label htmlFor="name" className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">
+          Full Name
+        </Label>
+        <div className="relative">
+          <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+          <Input
+            id="name"
+            type="text"
+            placeholder="Enter your full name"
+            {...register("name")}
+            className={`pl-12 h-14 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-xl text-lg ${
+              errors.name ? "ring-2 ring-red-400" : ""
+            }`}
+          />
+        </div>
+        {errors.name && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-500 text-sm mt-2 font-medium"
+          >
+            {errors.name.message}
+          </motion.p>
+        )}
+      </div>
 
-      <motion.form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Label htmlFor="name" className="text-sm font-medium text-black dark:text-white">
-            Full Name
-          </Label>
-          <motion.div className="relative" whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              id="name"
-              type="text"
-              placeholder="Enter your full name"
-              {...register("name")}
-              className={`pl-10 h-12 transition-all duration-300 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-black dark:text-white ${errors.name
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                  : "focus:border-amber-500 focus:ring-amber-500/20"
-                }`}
-            />
-          </motion.div>
-          <AnimatePresence>
-            {errors.name && (
-              <motion.p
-                variants={errorVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-red-500 text-sm flex items-center gap-1"
-              >
-                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                {errors.name.message}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-black dark:text-white">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="email" className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">
             Email Address
           </Label>
-          <motion.div className="relative" whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative">
+            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <Input
               id="email"
               type="email"
               placeholder="Enter your email"
               {...register("email")}
-              className={`pl-10 h-12 transition-all duration-300 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-black dark:text-white ${errors.email
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                  : "focus:border-amber-500 focus:ring-amber-500/20"
-                }`}
+              className={`pl-12 h-14 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-xl text-lg ${
+                errors.email ? "ring-2 ring-red-400" : ""
+              }`}
             />
-          </motion.div>
-          <AnimatePresence>
-            {errors.email && (
-              <motion.p
-                variants={errorVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-red-500 text-sm flex items-center gap-1"
-              >
-                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                {errors.email.message}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+          {errors.email && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-sm mt-2 font-medium"
+            >
+              {errors.email.message}
+            </motion.p>
+          )}
+        </div>
 
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Label htmlFor="phone" className="text-sm font-medium text-black dark:text-white">
+        <div>
+          <Label htmlFor="phone" className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">
             Phone Number
           </Label>
-          <motion.div className="relative" whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative">
+            <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <Input
               id="phone"
               type="tel"
-              placeholder="Enter your phone number"
+              placeholder="Enter phone number"
               {...register("phone")}
-              className={`pl-10 h-12 transition-all duration-300 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-black dark:text-white ${errors.phone
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                  : "focus:border-amber-500 focus:ring-amber-500/20"
-                }`}
+              className={`pl-12 h-14 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-xl text-lg ${
+                errors.phone ? "ring-2 ring-red-400" : ""
+              }`}
             />
-          </motion.div>
-          <AnimatePresence>
-            {errors.phone && (
-              <motion.p
-                variants={errorVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-red-500 text-sm flex items-center gap-1"
-              >
-                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                {errors.phone.message}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Label htmlFor="password" className="text-sm font-medium text-black dark:text-white">
-            Password
-          </Label>
-          <motion.div className="relative" whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              {...register("password")}
-              className={`pl-10 pr-12 h-12 transition-all duration-300 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-black dark:text-white ${errors.password
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                  : "focus:border-amber-500 focus:ring-amber-500/20"
-                }`}
-            />
-            <motion.button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+          </div>
+          {errors.phone && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-sm mt-2 font-medium"
             >
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-            </motion.button>
-          </motion.div>
-          <AnimatePresence>
-            {errors.password && (
-              <motion.p
-                variants={errorVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-red-500 text-sm flex items-center gap-1"
-              >
-                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                {errors.password.message}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
+              {errors.phone.message}
+            </motion.p>
+          )}
+        </div>
+      </div>
 
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Label htmlFor="confirmPassword" className="text-sm font-medium text-black dark:text-white">
-            Confirm Password
-          </Label>
-          <motion.div className="relative" whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              id="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              placeholder="Confirm your password"
-              {...register("confirmPassword")}
-              className={`pl-10 pr-12 h-12 transition-all duration-300 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-black dark:text-white ${errors.confirmPassword
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                  : "focus:border-amber-500 focus:ring-amber-500/20"
-                }`}
-            />
-            <motion.button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-            </motion.button>
-          </motion.div>
-          <AnimatePresence>
-            {errors.confirmPassword && (
-              <motion.p
-                variants={errorVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-red-500 text-sm flex items-center gap-1"
-              >
-                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                {errors.confirmPassword.message}
-              </motion.p>
+      <div>
+        <Label htmlFor="password" className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">
+          Password
+        </Label>
+        <div className="relative">
+          <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Create a password"
+            {...register("password")}
+            className={`pl-12 pr-12 h-14 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-xl text-lg ${
+              errors.password ? "ring-2 ring-red-400" : ""
+            }`}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-transparent"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5 text-slate-400 hover:text-slate-600" />
+            ) : (
+              <Eye className="h-5 w-5 text-slate-400 hover:text-slate-600" />
             )}
-          </AnimatePresence>
-        </motion.div>
+          </Button>
+        </div>
 
-        <motion.div variants={itemVariants}>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              type="submit"
-              className="w-full h-12 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              disabled={isLoading}
-            >
-              <AnimatePresence mode="wait">
-                {isLoading ? (
-                  <motion.div
-                    key="loading"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-2"
-                  >
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Creating Account...
-                  </motion.div>
-                ) : (
-                  <motion.span key="create" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    Create Account
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Button>
+        {/* Password Strength Indicator */}
+        {password && (
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-slate-600 dark:text-slate-400">Password Strength</span>
+              <span className={`text-sm font-semibold ${passwordStrength.color.replace("bg-", "text-")}`}>
+                {passwordStrength.label}
+              </span>
+            </div>
+            <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+              <motion.div
+                className={`h-2 rounded-full ${passwordStrength.color}`}
+                initial={{ width: 0 }}
+                animate={{ width: `${passwordStrength.strength}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
           </motion.div>
-        </motion.div>
-      </motion.form>
-    </motion.div>
+        )}
+
+        {errors.password && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-500 text-sm mt-2 font-medium"
+          >
+            {errors.password.message}
+          </motion.p>
+        )}
+      </div>
+
+      <div>
+        <Label htmlFor="confirmPassword" className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">
+          Confirm Password
+        </Label>
+        <div className="relative">
+          <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+          <Input
+            id="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm your password"
+            {...register("confirmPassword")}
+            className={`pl-12 pr-12 h-14 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-xl text-lg ${
+              errors.confirmPassword ? "ring-2 ring-red-400" : ""
+            }`}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-transparent"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? (
+              <EyeOff className="h-5 w-5 text-slate-400 hover:text-slate-600" />
+            ) : (
+              <Eye className="h-5 w-5 text-slate-400 hover:text-slate-600" />
+            )}
+          </Button>
+        </div>
+        {errors.confirmPassword && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-500 text-sm mt-2 font-medium"
+          >
+            {errors.confirmPassword.message}
+          </motion.p>
+        )}
+      </div>
+
+      <div className="flex items-start space-x-3">
+        <input
+          type="checkbox"
+          id="terms"
+          required
+          className="mt-1 rounded border-slate-300 text-gold-600 focus:ring-gold-500 focus:ring-offset-0"
+        />
+        <label htmlFor="terms" className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          I agree to the{" "}
+          <button type="button" className="text-gold-600 hover:text-gold-700 font-semibold">
+            Terms of Service
+          </button>{" "}
+          and{" "}
+          <button type="button" className="text-gold-600 hover:text-gold-700 font-semibold">
+            Privacy Policy
+          </button>
+        </label>
+      </div>
+
+      <Button
+        type="submit"
+        className="w-full h-14 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <>
+            <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+            Creating Account...
+          </>
+        ) : (
+          <>
+            <CheckCircle className="mr-3 h-5 w-5" />
+            Create Account
+            <ArrowRight className="ml-3 h-5 w-5" />
+          </>
+        )}
+      </Button>
+    </motion.form>
   )
 }

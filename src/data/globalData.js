@@ -156,9 +156,9 @@ export const propertiesData = [
     amenities: ["Private Pool", "Garden", "Parking", "Security", "Servant Quarter", "Gym"],
     nearbyPlaces: ["Hill Station - 2km", "Resort - 1km", "Market - 3km", "Railway Station - 5km"],
     images: [
-      "/assets/properties/flat17.webp",
-      "/assets/properties/flat18.webp",
       "/assets/properties/flat19.webp",
+      "/assets/properties/flat18.webp",
+      "/assets/properties/flat17.webp",
       "/assets/properties/flat20.webp",
     ],
     petsAllowed: true,
@@ -190,8 +190,8 @@ export const propertiesData = [
     amenities: ["Parking", "Security", "Garden", "Children Play Area"],
     nearbyPlaces: ["School - 0.5km", "Market - 0.8km", "Hospital - 1.5km", "Temple - 0.3km"],
     images: [
-      "/assets/properties/flat21.webp",
       "/assets/properties/flat22.webp",
+      "/assets/properties/flat21.webp",
       "/assets/properties/flat23.webp",
       "/assets/properties/flat24.webp",
     ],

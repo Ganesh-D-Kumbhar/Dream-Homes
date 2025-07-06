@@ -14,7 +14,6 @@ import { useTheme } from "../ThemeProvider.jsx"
 import { useAuth } from "../../context/AuthContext.jsx"
 import { Building2, Heart, User, LogOut, Sun, Moon, Home, Info, Phone, Menu, X, Sparkles, Bell } from "lucide-react"
 import { Badge } from "../ui/Badge.jsx"
-import { useProperty } from "@/context/PropertyContext.jsx"
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -23,7 +22,6 @@ export default function Navbar() {
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const { likedProperties } = useProperty()
 
   // Ensure component is mounted before accessing theme
   useEffect(() => {
@@ -36,6 +34,7 @@ export default function Navbar() {
     if (path === "/favorites") return "favorites"
     if (path === "/about") return "about"
     if (path === "/contact") return "contact"
+    if (path === "/profile") return "profile"
     return "home"
   }
 
@@ -57,8 +56,7 @@ export default function Navbar() {
         navigate("/contact")
         break
       case "profile":
-        // Handle profile navigation
-        console.log("Navigate to profile")
+        navigate("/profile")
         break
       default:
         navigate("/")
@@ -144,7 +142,7 @@ export default function Navbar() {
                 >
                   <item.icon className="h-5 w-5" />
                   <span>{item.label}</span>
-                  {item.id === "favorites" && <Badge className="bg-red-500 text-white text-xs px-2 py-1 ml-1">{likedProperties.length || 0}</Badge>}
+                  {item.id === "favorites" && <Badge className="bg-red-500 text-white text-xs px-2 py-1 ml-1">3</Badge>}
                 </Button>
               </motion.div>
             ))}
@@ -200,7 +198,7 @@ export default function Navbar() {
                 align="end"
                 forceMount
               >
-                <div className="flex items-center justify-start gap-3 p-3 rounded-lg bg-gradient-to-r from-gold-50 to-gold-100 dark:from-gold-900/20 dark:to-gold-800/20">
+                <div className="flex items-center justify-start gap-3 p-3 rounded-lg bg-gradient-to-r from-gold-50 to-gold-100 dark:from-gold-400 dark:to-gold-500">
                   <Avatar className="h-12 w-12">
                     <AvatarImage src={user?.profilePic || "/placeholder.svg"} alt={user?.name} />
                     <AvatarFallback className="bg-gradient-to-r from-gold-500 to-gold-600 text-white">
@@ -208,9 +206,9 @@ export default function Navbar() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col space-y-1 leading-none">
-                    <p className="font-semibold text-slate-800 dark:text-white">{user?.name}</p>
-                    <p className="w-[180px] truncate text-sm text-slate-600 dark:text-slate-400">{user?.email}</p>
-                    <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 text-xs w-fit">
+                    <p className="font-semibold text-slate-800 dark:text-white mb-2">{user?.name}</p>
+                    {/* <p className="w-[180px] truncate text-sm text-slate-600 dark:text-white/80">{user?.email}</p> */}
+                    <Badge className="bg-emerald-100 text-emerald-700 dark:bg-green-500 dark:border dark:border-green-600 dark:text-white text-xs w-fit">
                       Premium Member
                     </Badge>
                   </div>
@@ -220,7 +218,7 @@ export default function Navbar() {
                 {/* Theme Selection in Dropdown */}
                 <DropdownMenuItem
                   onClick={toggleTheme}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gold-50 dark:hover:bg-gold-900/20 cursor-pointer"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gold-50 dark:hover:bg-gold-400 cursor-pointer"
                 >
                   {getThemeIcon()}
                   <span className="font-medium">
@@ -232,25 +230,25 @@ export default function Navbar() {
 
                 <DropdownMenuItem
                   onClick={() => handleNavigation("profile")}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gold-50 dark:hover:bg-gold-900/20 cursor-pointer"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gold-50 dark:hover:bg-gold-400 cursor-pointer"
                 >
-                  <User className="h-5 w-5 text-gold-600" />
+                  <User className="h-5 w-5 text-gold-900" />
                   <span className="font-medium">Profile Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleNavigation("favorites")}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-gold-400 cursor-pointer"
                 >
                   <Heart className="h-5 w-5 text-red-600" />
                   <span className="font-medium">My Favorites</span>
-                  <Badge className="bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400 text-xs ml-auto">
+                  <Badge className="bg-red-100 text-red-700 dark:bg-red-900 dark:text-white text-xs ml-auto">
                     3
                   </Badge>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="my-2" />
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer text-red-600"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-gold-500 cursor-pointer text-[#FF0000]"
                 >
                   <LogOut className="h-5 w-5" />
                   <span className="font-medium">Log out</span>
@@ -310,8 +308,24 @@ export default function Navbar() {
                   </motion.div>
                 ))}
 
-                {/* Mobile Theme Toggle */}
+                {/* Mobile Profile Link */}
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
+                  <Button
+                    variant={currentPage === "profile" ? "default" : "ghost"}
+                    onClick={() => handleNavigation("profile")}
+                    className={`w-full justify-start space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      currentPage === "profile"
+                        ? "bg-gradient-to-r from-gold-500 to-gold-600 text-white shadow-lg"
+                        : "text-slate-600 dark:text-slate-300 hover:text-gold-600 hover:bg-gold-50 dark:hover:bg-gold-900/20"
+                    }`}
+                  >
+                    <User className="h-5 w-5" />
+                    <span>Profile</span>
+                  </Button>
+                </motion.div>
+
+                {/* Mobile Theme Toggle */}
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                   <Button
                     variant="ghost"
                     onClick={toggleTheme}
