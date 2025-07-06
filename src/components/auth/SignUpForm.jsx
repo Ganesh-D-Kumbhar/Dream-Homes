@@ -50,11 +50,11 @@ export default function SignupForm({ onSuccess, setIsLoading }) {
       const success = await signup(userData)
 
       if (success) {
-        toast.success("🎉 Account created successfully! Welcome to Dream Homes!", {
+        toast.success("Account created successfully! Welcome to Dream Homes!", {
           duration: 5000,
           style: {
-            background: "#10B981",
-            color: "#fff",
+            background: "white",
+            color: "black",
             fontWeight: "600",
             borderRadius: "12px",
             padding: "16px",
@@ -66,11 +66,11 @@ export default function SignupForm({ onSuccess, setIsLoading }) {
         })
         onSuccess()
       } else {
-        toast.error("❌ Account creation failed! Email might already exist.", {
+        toast.error("Account creation failed! Email might already exist.", {
           duration: 4000,
           style: {
-            background: "#EF4444",
-            color: "#fff",
+            background: "white",
+            color: "black",
             fontWeight: "600",
             borderRadius: "12px",
             padding: "16px",
@@ -82,11 +82,11 @@ export default function SignupForm({ onSuccess, setIsLoading }) {
         })
       }
     } catch (error) {
-      toast.error("🚨 Something went wrong! Please try again.", {
+      toast.error("Something went wrong! Please try again.", {
         duration: 4000,
         style: {
-          background: "#EF4444",
-          color: "#fff",
+          background: "white",
+          color: "black",
           fontWeight: "600",
           borderRadius: "12px",
           padding: "16px",

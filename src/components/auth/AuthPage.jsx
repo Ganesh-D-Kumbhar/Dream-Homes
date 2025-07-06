@@ -64,39 +64,6 @@ export default function AuthPage({ onAuthSuccess }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gold-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-gold-400/20 to-gold-600/20 rounded-full blur-3xl animate-float"></div>
-        <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-emerald-400/20 to-emerald-600/20 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "2s" }}
-        ></div>
-        <div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "4s" }}
-        ></div>
-
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-gold-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.3, 1, 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
 
       <div className="relative z-10 min-h-screen flex">
         {/* Left Side - Branding & Features */}
@@ -159,13 +126,13 @@ export default function AuthPage({ onAuthSuccess }) {
             </motion.div>
 
             {/* Features Grid */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="grid grid-cols-2 gap-6 mb-12"
             >
-              {features.map((feature, index) => (
+              {features?.map((feature, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -189,10 +156,10 @@ export default function AuthPage({ onAuthSuccess }) {
                   </Card>
                 </motion.div>
               ))}
-            </motion.div>
+            </motion.div> */}
 
             {/* Testimonials */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
@@ -200,7 +167,7 @@ export default function AuthPage({ onAuthSuccess }) {
             >
               <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6">What Our Clients Say</h3>
               <div className="space-y-4">
-                {testimonials.slice(0, 2).map((testimonial, index) => (
+                {testimonials?.slice(0, 2).map((testimonial, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -30 }}
@@ -228,17 +195,17 @@ export default function AuthPage({ onAuthSuccess }) {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
 
         {/* Right Side - Auth Form */}
-        <div className="w-full lg:w-1/2 xl:w-2/5 flex items-center justify-center p-6 lg:p-12">
+        <div className="w-full lg:w-3/5 xl:w-1/2 flex items-center justify-center p-6 lg:p-12">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-full max-w-md"
+            className="w-full max-w-lg"
           >
             {/* Mobile Logo */}
             <div className="lg:hidden text-center mb-8">
@@ -288,22 +255,20 @@ export default function AuthPage({ onAuthSuccess }) {
                   <div className="flex bg-slate-100 dark:bg-slate-700 rounded-2xl p-1 mb-8">
                     <Button
                       variant="ghost"
-                      className={`flex-1 rounded-xl font-semibold transition-all duration-300 ${
-                        isLogin
+                      className={`flex-1 rounded-xl font-semibold transition-all duration-300 ${isLogin
                           ? "bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-lg"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-                      }`}
+                        }`}
                       onClick={() => setIsLogin(true)}
                     >
                       Sign In
                     </Button>
                     <Button
                       variant="ghost"
-                      className={`flex-1 rounded-xl font-semibold transition-all duration-300 ${
-                        !isLogin
+                      className={`flex-1 rounded-xl font-semibold transition-all duration-300 ${!isLogin
                           ? "bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-lg"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-                      }`}
+                        }`}
                       onClick={() => setIsLogin(false)}
                     >
                       Sign Up
@@ -355,7 +320,7 @@ export default function AuthPage({ onAuthSuccess }) {
             </Card>
 
             {/* Demo Credentials */}
-            {isLogin && (
+            {/* {isLogin && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -371,9 +336,10 @@ export default function AuthPage({ onAuthSuccess }) {
                   <p>🔑 Password: demo123</p>
                 </div>
               </motion.div>
-            )}
+            )} */}
           </motion.div>
         </div>
+
       </div>
 
       {/* Loading Overlay */}

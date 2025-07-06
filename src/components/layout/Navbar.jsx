@@ -14,6 +14,7 @@ import { useTheme } from "../ThemeProvider.jsx"
 import { useAuth } from "../../context/AuthContext.jsx"
 import { Building2, Heart, User, LogOut, Sun, Moon, Home, Info, Phone, Menu, X, Sparkles, Bell } from "lucide-react"
 import { Badge } from "../ui/Badge.jsx"
+import { useProperty } from "../../context/PropertyContext.jsx"
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -22,6 +23,7 @@ export default function Navbar() {
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const {likedProperties} = useProperty()
 
   // Ensure component is mounted before accessing theme
   useEffect(() => {
@@ -142,7 +144,7 @@ export default function Navbar() {
                 >
                   <item.icon className="h-5 w-5" />
                   <span>{item.label}</span>
-                  {item.id === "favorites" && <Badge className="bg-red-500 text-white text-xs px-2 py-1 ml-1">3</Badge>}
+                  {item.id === "favorites" && <Badge className="bg-red-500 text-white text-xs px-2 py-1 ml-1">{likedProperties.length}</Badge>}
                 </Button>
               </motion.div>
             ))}
@@ -151,7 +153,7 @@ export default function Navbar() {
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
             {/* Notifications */}
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            {/* <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Button
                 variant="ghost"
                 size="icon"
@@ -160,7 +162,7 @@ export default function Navbar() {
                 <Bell className="h-5 w-5" />
                 <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5">2</Badge>
               </Button>
-            </motion.div>
+            </motion.div> */}
 
             {/* Theme Toggle */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>

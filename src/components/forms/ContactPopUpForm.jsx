@@ -68,11 +68,11 @@ export default function ContactUsPopup({ isOpen, onClose }) {
 
         if (response.ok) {
           setIsSuccess(true)
-          toast.success("🎉 Thank you for reaching out! We'll get back to you soon!", {
+          toast.success("Thank you for reaching out! We'll get back to you soon!", {
             duration: 4000,
             style: {
-              background: "#F59E0B",
-              color: "#fff",
+              background: "white",
+              color: "black",
               fontWeight: "600",
               borderRadius: "12px",
               padding: "16px",
@@ -89,11 +89,11 @@ export default function ContactUsPopup({ isOpen, onClose }) {
           throw new Error("Failed to submit form")
         }
       } catch (error) {
-        toast.error("❌ Something went wrong! Please try again.", {
+        toast.error("Something went wrong! Please try again.", {
           duration: 4000,
           style: {
-            background: "#EF4444",
-            color: "#fff",
+            background: "white",
+            color: "black",
             fontWeight: "600",
             borderRadius: "12px",
             padding: "16px",

@@ -39,11 +39,11 @@ export default function LoginForm({ onSuccess, setIsLoading }) {
       const success = await login(data.email, data.password)
 
       if (success) {
-        toast.success("🎉 Welcome back! Login successful!", {
+        toast.success("Welcome back! Login successful!", {
           duration: 4000,
           style: {
-            background: "#10B981",
-            color: "#fff",
+            background: "white",
+            color: "black",
             fontWeight: "600",
             borderRadius: "12px",
             padding: "16px",
@@ -55,11 +55,11 @@ export default function LoginForm({ onSuccess, setIsLoading }) {
         })
         onSuccess()
       } else {
-        toast.error("❌ Login failed! Please check your credentials.", {
+        toast.error("Login failed! Please check your credentials.", {
           duration: 4000,
           style: {
-            background: "#EF4444",
-            color: "#fff",
+            background: "white",
+            color: "black",
             fontWeight: "600",
             borderRadius: "12px",
             padding: "16px",
@@ -71,11 +71,11 @@ export default function LoginForm({ onSuccess, setIsLoading }) {
         })
       }
     } catch (error) {
-      toast.error("🚨 Something went wrong! Please try again.", {
+      toast.error(" Something went wrong! Please try again.", {
         duration: 4000,
         style: {
-          background: "#EF4444",
-          color: "#fff",
+          background: "white",
+          color: "black",
           fontWeight: "600",
           borderRadius: "12px",
           padding: "16px",
@@ -169,9 +169,9 @@ export default function LoginForm({ onSuccess, setIsLoading }) {
           />
           <span className="ml-2 text-sm text-slate-600 dark:text-slate-400">Remember me</span>
         </label>
-        <button type="button" className="text-sm text-gold-600 hover:text-gold-700 font-semibold transition-colors">
+        {/* <button type="button" className="text-sm text-gold-600 hover:text-gold-700 font-semibold transition-colors">
           Forgot password?
-        </button>
+        </button> */}
       </div>
 
       <Button

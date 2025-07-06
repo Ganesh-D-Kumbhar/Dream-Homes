@@ -83,7 +83,7 @@ export default function ProfilePage() {
         setProfileImage(e.target.result)
         updateProfile({ profilePic: e.target.result })
         // Single toast notification for image upload
-        toast.success("✅ Profile image updated successfully!", {
+        toast.success("Profile image updated successfully!", {
           duration: 3000,
           style: {
             background: "#10B981",
@@ -104,7 +104,7 @@ export default function ProfilePage() {
       await new Promise((resolve) => setTimeout(resolve, 1000))
       updateProfile(data)
       // Single toast notification for profile update
-      toast.success("✅ Profile updated successfully!", {
+      toast.success("Profile updated successfully!", {
         duration: 3000,
         style: {
           background: "#10B981",
@@ -115,7 +115,7 @@ export default function ProfilePage() {
         },
       })
     } catch (error) {
-      toast.error("❌ Failed to update profile", {
+      toast.error("Failed to update profile", {
         duration: 3000,
         style: {
           background: "#EF4444",
@@ -143,7 +143,7 @@ export default function ProfilePage() {
         const updatedUsers = users.map((u) => (u.id === user.id ? { ...u, password: data.newPassword } : u))
         localStorage.setItem("users", JSON.stringify(updatedUsers))
         passwordForm.reset()
-        toast.success("🔒 Password updated successfully!", {
+        toast.success("Password updated successfully!", {
           duration: 3000,
           style: {
             background: "#10B981",
@@ -154,7 +154,7 @@ export default function ProfilePage() {
           },
         })
       } else {
-        toast.error("❌ Current password is incorrect", {
+        toast.error("Current password is incorrect", {
           duration: 3000,
           style: {
             background: "#EF4444",
@@ -166,7 +166,7 @@ export default function ProfilePage() {
         })
       }
     } catch (error) {
-      toast.error("❌ Failed to update password", {
+      toast.error("Failed to update password", {
         duration: 3000,
         style: {
           background: "#EF4444",

@@ -12,48 +12,6 @@ import { ThemeProvider } from "./components/ThemeProvider.jsx"
 import ProfilePage from "./components/pages/profilepage/ProfilePage.jsx"
 import { Toaster } from "react-hot-toast"
 
-// export default function App() {
-//   const [isAuthenticated, setIsAuthenticated] = useState(false)
-//   const [isLoading, setIsLoading] = useState(true)
-
-//   useEffect(() => {
-//     const user = localStorage.getItem("user")
-//     setIsAuthenticated(!!user)
-//     setIsLoading(false)
-//   }, [])
-
-//   if (isLoading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-amber-500"></div>
-//       </div>
-//     )
-//   }
-
-//   if (!isAuthenticated) {
-//     return <AuthPage onAuthSuccess={() => setIsAuthenticated(true)} />
-//   }
-
-//   return (
-//     <ThemeProvider>
-//       <PropertyProvider>
-//         <ScrollToTop />
-//         <Routes>
-//           <Route path="/" element={<Wrapper />}>
-//             <Route index element={<HomePage />} />
-//             <Route path="about" element={<AboutPage />} />
-//             <Route path="contact" element={<ContactPage />} />
-//             <Route path="favorites" element={<Favoritespage />} />
-//           </Route>
-//         </Routes>
-//       </PropertyProvider>
-//     </ThemeProvider>
-//   )
-// }
-
-
-
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -88,6 +46,7 @@ function App() {
             className: "dark:bg-slate-800 dark:text-white",
             duration: 4000,
             style: {
+              border:"1px solid black",
               borderRadius: "12px",
               padding: "16px",
               fontSize: "14px",
@@ -120,6 +79,7 @@ function App() {
             className: "dark:bg-slate-800 dark:text-white",
             duration: 4000,
             style: {
+               border:"1px solid black",
               borderRadius: "12px",
               padding: "16px",
               fontSize: "14px",
