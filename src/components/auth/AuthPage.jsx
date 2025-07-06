@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import LoginForm from "./LoginForm.jsx"
-import SignupForm from "./SignupForm.jsx"
+import SignupForm from "./SignUpForm.jsx"
 import { Card, CardContent } from "../ui/Card.jsx"
 import { Button } from "../ui/Button.jsx"
 import { Building2, Sparkles, Star, Users, Award, Shield, Eye } from "lucide-react"
