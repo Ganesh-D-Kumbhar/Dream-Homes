@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -11,6 +12,7 @@ import { Label } from "@/components/ui/Label.jsx"
 import { Badge } from "@/components/ui/Badge.jsx"
 import { contactData } from "../../../data/globalData.js"
 import ContactPopUpForm from "../../forms/ContactPopUpForm.jsx"
+import { FaWhatsapp } from "react-icons/fa";
 import {
   MapPin,
   Phone,
@@ -59,14 +61,30 @@ export default function Contact() {
   })
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log("Contact form data:", data)
-    toast.success("Message sent successfully! We'll get back to you soon.")
-    reset()
-    setIsSubmitting(false)
-  }
+    setIsSubmitting(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
+      const response = await axios.post("/api/main-form", {
+        ...data,
+        timestamp: new Date().toISOString(),
+        type: "contact_us",
+      });
+
+      if (response.status === 200) {
+        console.log("Contact form data:", data);
+        toast.success("Message sent successfully! We'll get back to you soon.");
+        reset();
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -151,7 +169,6 @@ export default function Contact() {
   const socialLinks = [
     { icon: Facebook, href: contactData.socialMedia.facebook, color: "hover:text-blue-600", bg: "hover:bg-blue-50" },
     { icon: Github, href: contactData.socialMedia.github, color: "hover:text-gray-800", bg: "hover:bg-gray-100" },
-    // { icon: Twitter, href: contactData.socialMedia.twitter, color: "hover:text-sky-500", bg: "hover:bg-sky-50" },
     { icon: Instagram, href: contactData.socialMedia.instagram, color: "hover:text-pink-600", bg: "hover:bg-pink-50" },
     { icon: Linkedin, href: contactData.socialMedia.linkedin, color: "hover:text-blue-700", bg: "hover:bg-blue-50" },
   ]
@@ -189,7 +206,7 @@ export default function Contact() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="mb-8"
+                className="mb-8 cursor-pointer"
                 onClick={() => setIsContactUsOpen(true)}
               >
                 <Badge className="bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-3 text-lg font-semibold shadow-lg mb-6">
@@ -212,21 +229,32 @@ export default function Contact() {
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Button
-                  onClick={handleScroll}
+                  onClick={() => {
+                    // setIsContactUsOpen(true)
+                    handleScroll()
+                  }}
                   size="lg"
                   className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white px-10 py-4 text-lg font-semibold shadow-glow hover:shadow-glow-lg transition-all duration-300 transform hover:scale-105"
                 >
                   Start Conversation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-2 border-gold-400 text-gold-600 hover:bg-gold-50 dark:hover:bg-gold-900/20 dark:hover:text-white/80 px-10 py-4 text-lg font-semibold backdrop-blur-sm bg-transparent"
+                <a
+                  href="https://wa.me/919096378354?text=Hello%2C%20I%20am%20interested%20in%20your%20services"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call Now
-                </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10 dark:hover:bg-[#25D366]/20 dark:hover:text-white px-10 py-4 text-lg font-semibold backdrop-blur-sm bg-transparent"
+
+                  >
+                    <FaWhatsapp className="mr-2 h-8 w-8 text-green" />
+                    Whatsapp Us
+                  </Button>
+                </a>
+
               </div>
             </motion.div>
           </div>
@@ -522,6 +550,7 @@ export default function Contact() {
                 Your dream property is just one conversation away. Let's discuss your needs today.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
+               <Link to={'/'}>
                 <Button
                   size="lg"
                   className="bg-white text-gold-600 hover:bg-gray-100 px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
@@ -529,8 +558,10 @@ export default function Contact() {
                   <Building2 className="mr-2 h-6 w-6" />
                   Browse Properties
                 </Button>
+               </Link>
                 <Button
                   size="lg"
+                  onClick={() => setIsContactUsOpen(true)}
                   variant="outline"
                   className="border-2 border-white text-white hover:bg-white hover:text-gold-600 bg-transparent px-10 py-4 text-lg font-semibold backdrop-blur-sm"
                 >

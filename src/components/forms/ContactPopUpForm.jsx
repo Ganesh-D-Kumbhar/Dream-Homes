@@ -49,25 +49,19 @@ export default function ContactUsPopup({ isOpen, onClose }) {
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      setIsSubmitting(true)
+      setIsSubmitting(true);
       try {
         // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500))
+        await new Promise((resolve) => setTimeout(resolve, 1500));
 
-        const response = await fetch("/api/main-form", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...values,
-            timestamp: new Date().toISOString(),
-            type: "contact_us",
-          }),
-        })
+        const response = await axios.post("/api/main-form", {
+          ...values,
+          timestamp: new Date().toISOString(),
+          type: "contact_us",
+        });
 
-        if (response.ok) {
-          setIsSuccess(true)
+        if (response.status === 200) {
+          setIsSuccess(true);
           toast.success("Thank you for reaching out! We'll get back to you soon!", {
             duration: 4000,
             style: {
@@ -77,16 +71,16 @@ export default function ContactUsPopup({ isOpen, onClose }) {
               borderRadius: "12px",
               padding: "16px",
             },
-          })
+          });
 
           // Reset form and close popup after success animation
           setTimeout(() => {
-            resetForm()
-            setIsSuccess(false)
-            onClose()
-          }, 2000)
+            resetForm();
+            setIsSuccess(false);
+            onClose();
+          }, 2000);
         } else {
-          throw new Error("Failed to submit form")
+          throw new Error("Failed to submit form");
         }
       } catch (error) {
         toast.error("Something went wrong! Please try again.", {
@@ -98,11 +92,11 @@ export default function ContactUsPopup({ isOpen, onClose }) {
             borderRadius: "12px",
             padding: "16px",
           },
-        })
+        });
       } finally {
-        setIsSubmitting(false)
+        setIsSubmitting(false);
       }
-    },
+    }
   })
 
   const handleClose = (e) => {
@@ -200,11 +194,11 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                       <div className="p-5">
                         <div className="mb-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400 text-xs px-2 py-1">
+                            <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/20 dark:hover:text-white dark:text-amber-400 text-xs px-2 py-1">
                               <Star className="w-3 h-3 mr-1 fill-current" />
                               Premium Support
                             </Badge>
-                            <Badge className="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 text-xs px-2 py-1">
+                            <Badge className="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:hover:text-white dark:text-yellow-400 text-xs px-2 py-1">
                               <Clock className="w-3 h-3 mr-1" />
                               Quick Response
                             </Badge>
@@ -234,9 +228,8 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                                   value={formik.values.fullname}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${
-                                    formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.fullname && formik.errors.fullname && (
@@ -261,9 +254,8 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                                   value={formik.values.email}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${
-                                    formik.touched.email && formik.errors.email ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.email && formik.errors.email ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.email && formik.errors.email && (
@@ -290,9 +282,8 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                                   value={formik.values.phoneno}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${
-                                    formik.touched.phoneno && formik.errors.phoneno ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.phoneno && formik.errors.phoneno ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.phoneno && formik.errors.phoneno && (
@@ -317,9 +308,8 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                                   value={formik.values.subject}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${
-                                    formik.touched.subject && formik.errors.subject ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.subject && formik.errors.subject ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.subject && formik.errors.subject && (
@@ -343,9 +333,8 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                               value={formik.values.message}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
-                              className={`bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg resize-none text-sm ${
-                                formik.touched.message && formik.errors.message ? "ring-2 ring-red-400" : ""
-                              }`}
+                              className={`bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg resize-none text-sm ${formik.touched.message && formik.errors.message ? "ring-2 ring-red-400" : ""
+                                }`}
                             />
                             {formik.touched.message && formik.errors.message && (
                               <p className="text-red-500 text-xs mt-1">{formik.errors.message}</p>

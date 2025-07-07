@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import ContactPopUpForm from "../../forms/ContactPopUpForm.jsx"
 import { Card, CardContent } from "@/components/ui/Card.jsx"
 import { Badge } from "@/components/ui/Badge.jsx"
 import { Button } from "@/components/ui/Button.jsx"
@@ -23,6 +24,7 @@ import {
   Star,
   CheckCircle,
 } from "lucide-react"
+
 
 export default function AboutUs() {
   const targetRef = useRef(null)
@@ -100,6 +102,8 @@ export default function AboutUs() {
     },
   ]
 
+  const [isContactUsOpen, setIsContactUsOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gold-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Hero Section */}
@@ -161,7 +165,7 @@ export default function AboutUs() {
                 onClick={handleScroll}
                 variant="outline"
                 size="lg"
-                className="border-2 border-gold-400 text-gold-600 hover:bg-gold-50 dark:hover:bg-gold-900/20 px-10 py-4 text-lg font-semibold backdrop-blur-sm bg-transparent"
+                className="border-2 border-gold-400 text-gold-600 hover:bg-gold-50 dark:hover:bg-gold-900/20 dark:hover:text-white px-10 py-4 text-lg font-semibold backdrop-blur-sm bg-transparent"
               >
                 Meet Our Team
               </Button>
@@ -427,6 +431,7 @@ export default function AboutUs() {
               </Link>
               <Button
                 size="lg"
+                onClick={() => setIsContactUsOpen(true)}
                 variant="outline"
                 className="border-2 border-white text-white hover:bg-white hover:text-gold-600 bg-transparent px-10 py-4 text-lg font-semibold backdrop-blur-sm"
               >
@@ -437,6 +442,10 @@ export default function AboutUs() {
           </motion.div>
         </div>
       </motion.section>
+      <ContactPopUpForm
+        isOpen={isContactUsOpen}
+        onClose={() => setIsContactUsOpen(false)}
+      />
     </div>
   )
 }

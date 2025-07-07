@@ -249,9 +249,9 @@ export const contactData = {
   email: "ganeshhh2003@gmail.com",
   hours: "Monday - Saturday: 9:00 AM - 7:00 PM",
   socialMedia: {
-    facebook: "https://facebook.com/eliteproperties",
-    twitter: "https://twitter.com/eliteproperties",
-    instagram: "https://instagram.com/eliteproperties",
-    linkedin: "https://linkedin.com/company/eliteproperties",
+    facebook: "https://www.facebook.com/ganeshkumbhar211",
+    instagram: "https://www.instagram.com/ganesh_kumbhar_211",
+    linkedin: "https://www.linkedin.com/in/ganesh-d-kumbhar/",
+    github: "https://github.com/Ganesh-D-Kumbhar",
   },
 }

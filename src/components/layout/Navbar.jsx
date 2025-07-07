@@ -121,7 +121,7 @@ export default function Navbar() {
               </div>
             </div>
             <div>
-              <span className="text-2xl font-bold text-gradient">Dream Homes</span>
+              <span className="text-2xl font-bold text-gradient">Dream <span className="text-[15px] sm:text-2xl">Homes</span></span>
               <div className="flex items-center gap-1">
                 <Sparkles className="w-3 h-3 text-gold-500" />
                 <span className="text-xs text-slate-500 dark:text-slate-400">Premium Real Estate</span>

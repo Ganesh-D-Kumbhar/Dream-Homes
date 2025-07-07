@@ -204,7 +204,7 @@ export default function PropertyCard({ property }) {
                   variant="outline"
                   size="icon"
                   onClick={() => setShowContactForm(true)}
-                  className="border-emerald-400 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 bg-transparent"
+                  className="border-emerald-400 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 dark:hover:text-white  bg-transparent"
                 >
                   <Phone className="h-4 w-4" />
                 </Button>
@@ -212,7 +212,7 @@ export default function PropertyCard({ property }) {
                   onClick={() => setShowForm(true)}
                   variant="outline"
                   size="icon"
-                  className="border-blue-400 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 bg-transparent"
+                  className="border-blue-400 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 dark:hover:text-white bg-transparent"
                 >
                   <MessageCircle className="h-4 w-4" />
                 </Button>

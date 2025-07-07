@@ -116,13 +116,13 @@ export default function PropertyDetailsPopup({ isOpen, onClose, property }) {
                     >
                       <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="ghost"
                       size="icon"
                       className="rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-gold-600 backdrop-blur-md shadow-lg"
                     >
                       <Share2 className="h-5 w-5" />
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="ghost"
                       size="icon"
@@ -407,21 +407,21 @@ export default function PropertyDetailsPopup({ isOpen, onClose, property }) {
                     <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-slate-200 dark:border-slate-700">
                       <Button
                         onClick={() => setShowContactForm(true)}
-                        className="flex-1 h-14 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                        className="flex-1 h-14 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl "
                       >
                         <MessageCircle className="mr-3 h-5 w-5" />
                         Get More Details
                       </Button>
                       <Button
                         variant="outline"
-                        className="h-14 px-8 border-2 border-emerald-400 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 font-semibold rounded-xl bg-transparent"
+                        className="h-14 px-8 border-2 border-emerald-400 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 font-semibold rounded-xl bg-transparent dark:hover:text-white"
                       >
                         <Phone className="mr-3 h-5 w-5" />
                         Call Now
                       </Button>
                       <Button
                         variant="outline"
-                        className="h-14 px-8 border-2 border-blue-400 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 font-semibold rounded-xl bg-transparent"
+                        className="h-14 px-8 border-2 border-blue-400 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 font-semibold rounded-xl bg-transparent dark:hover:text-white"
                       >
                         <Eye className="mr-3 h-5 w-5" />
                         Schedule Visit

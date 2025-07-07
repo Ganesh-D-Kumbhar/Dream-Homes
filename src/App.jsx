@@ -11,6 +11,7 @@ import ScrollToTop from "./utility/ScrollToTop.jsx"
 import { ThemeProvider } from "./components/ThemeProvider.jsx"
 import ProfilePage from "./components/pages/profilepage/ProfilePage.jsx"
 import { Toaster } from "react-hot-toast"
+import ScrollToTopButton from "./utility/ScrollToTopButton.jsx"
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -63,6 +64,7 @@ function App() {
       <PropertyProvider>
         <div className="App min-h-screen bg-background text-foreground">
           <ScrollToTop />
+          <ScrollToTopButton />
           <Routes>
             <Route path="/" element={<Wrapper />} >
               <Route index element={<HomePage />} />
