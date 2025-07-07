@@ -337,11 +337,10 @@ export default function ProfilePage() {
                         key={tab.id}
                         variant="ghost"
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex-1 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm h-10 sm:h-auto ${
-                          activeTab === tab.id
+                        className={`flex-1 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm h-10 sm:h-auto ${activeTab === tab.id
                             ? "bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-lg"
                             : "text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-                        }`}
+                          }`}
                       >
                         <tab.icon className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                         <span className="hidden sm:inline">{tab.label}</span>
@@ -383,9 +382,8 @@ export default function ProfilePage() {
                                     <Input
                                       id="name"
                                       {...profileForm.register("name")}
-                                      className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
-                                        profileForm.formState.errors.name ? "ring-2 ring-red-400" : ""
-                                      }`}
+                                      className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${profileForm.formState.errors.name ? "ring-2 ring-red-400" : ""
+                                        }`}
                                     />
                                   </div>
                                   {profileForm.formState.errors.name && (
@@ -401,9 +399,10 @@ export default function ProfilePage() {
                                   <div className="relative">
                                     <Mail className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4 sm:w-5 sm:h-5" />
                                     <Input
+                                      id="email"
                                       value={user?.email}
                                       disabled
-                                      className="pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-100 dark:bg-slate-600 border-0 rounded-xl text-slate-500 cursor-not-allowed text-sm sm:text-base"
+                                      className="pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-100 dark:bg-slate-600 dark:text-white border-0 rounded-xl text-slate-500 cursor-not-allowed text-sm sm:text-base"
                                     />
                                   </div>
                                   <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
@@ -423,9 +422,8 @@ export default function ProfilePage() {
                                     type="tel"
                                     placeholder="Enter 10-digit phone number"
                                     {...profileForm.register("phone")}
-                                    className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
-                                      profileForm.formState.errors.phone ? "ring-2 ring-red-400" : ""
-                                    }`}
+                                    className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${profileForm.formState.errors.phone ? "ring-2 ring-red-400" : ""
+                                      }`}
                                   />
                                 </div>
                                 {profileForm.formState.errors.phone && (
@@ -480,9 +478,8 @@ export default function ProfilePage() {
                                     type={showCurrentPassword ? "text" : "password"}
                                     placeholder="Enter current password"
                                     {...passwordForm.register("currentPassword")}
-                                    className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
-                                      passwordForm.formState.errors.currentPassword ? "ring-2 ring-red-400" : ""
-                                    }`}
+                                    className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.currentPassword ? "ring-2 ring-red-400" : ""
+                                      }`}
                                   />
                                   <Button
                                     type="button"
@@ -519,9 +516,8 @@ export default function ProfilePage() {
                                       type={showNewPassword ? "text" : "password"}
                                       placeholder="Enter new password"
                                       {...passwordForm.register("newPassword")}
-                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
-                                        passwordForm.formState.errors.newPassword ? "ring-2 ring-red-400" : ""
-                                      }`}
+                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.newPassword ? "ring-2 ring-red-400" : ""
+                                        }`}
                                     />
                                     <Button
                                       type="button"
@@ -557,9 +553,8 @@ export default function ProfilePage() {
                                       type={showConfirmPassword ? "text" : "password"}
                                       placeholder="Confirm new password"
                                       {...passwordForm.register("confirmPassword")}
-                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
-                                        passwordForm.formState.errors.confirmPassword ? "ring-2 ring-red-400" : ""
-                                      }`}
+                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.confirmPassword ? "ring-2 ring-red-400" : ""
+                                        }`}
                                     />
                                     <Button
                                       type="button"
