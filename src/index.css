@@ -375,3 +375,8 @@
   transform: translateX(-100px);
   transition: opacity 300ms, transform 300ms;
 }
+
+/* for toast positions */
+div[style*="top: 0px"][style*="right: 0px"] {
+  top: 80px !important;
+}

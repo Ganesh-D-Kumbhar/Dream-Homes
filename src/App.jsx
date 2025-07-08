@@ -8,10 +8,11 @@ import ContactPage from "./components/pages/contact/Contact.jsx"
 import Favoritespage from "./components/pages/favorite/FavoritePage.jsx"
 import Wrapper from "./components/wrapper/wrapper.jsx"
 import ScrollToTop from "./utility/ScrollToTop.jsx"
+import ScrollToTopButton from "./utility/ScrollToTopButton.jsx"
 import { ThemeProvider } from "./components/ThemeProvider.jsx"
 import ProfilePage from "./components/pages/profilepage/ProfilePage.jsx"
+import AdminPanel from "./components/admin/AdminPanel.jsx"
 import { Toaster } from "react-hot-toast"
-import ScrollToTopButton from "./utility/ScrollToTopButton.jsx"
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -37,28 +38,6 @@ function App() {
     )
   }
 
-  if (!isAuthenticated) {
-    return (
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-        <AuthPage onAuthSuccess={() => setIsAuthenticated(true)} />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            className: "dark:bg-slate-800 dark:text-white",
-            duration: 4000,
-            style: {
-              border:"1px solid black",
-              borderRadius: "12px",
-              padding: "16px",
-              fontSize: "14px",
-              fontWeight: "600",
-            },
-          }}
-        />
-      </ThemeProvider>
-    )
-  }
-
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
       <PropertyProvider>
@@ -66,13 +45,21 @@ function App() {
           <ScrollToTop />
           <ScrollToTopButton />
           <Routes>
-            <Route path="/" element={<Wrapper />} >
-              <Route index element={<HomePage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="favorites" element={<Favoritespage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Route>
+            {/* Admin Route - Always accessible */}
+            <Route path="/admin" element={<AdminPanel />} />
+
+            {/* Main App Routes - Require Authentication */}
+            {!isAuthenticated ? (
+              <Route path="*" element={<AuthPage onAuthSuccess={() => setIsAuthenticated(true)} />} />
+            ) : (
+              <Route path="/" element={<Wrapper />}>
+                <Route index element={<HomePage />} />
+                <Route path="about" element={<AboutPage />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route path="favorites" element={<Favoritespage />} />
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
+            )}
           </Routes>
         </div>
         <Toaster
@@ -81,7 +68,7 @@ function App() {
             className: "dark:bg-slate-800 dark:text-white",
             duration: 4000,
             style: {
-               border:"1px solid black",
+              border: "1px solid black",
               borderRadius: "12px",
               padding: "16px",
               fontSize: "14px",
@@ -95,3 +82,4 @@ function App() {
 }
 
 export default App
+

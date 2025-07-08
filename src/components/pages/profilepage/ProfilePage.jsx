@@ -107,8 +107,9 @@ export default function ProfilePage() {
       toast.success("Profile updated successfully!", {
         duration: 3000,
         style: {
-          background: "#10B981",
-          color: "#fff",
+          background: "white",
+          color: "black",
+          border: "1px solid black",
           fontWeight: "600",
           borderRadius: "12px",
           padding: "16px",

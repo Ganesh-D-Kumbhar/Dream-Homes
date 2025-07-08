@@ -34,10 +34,10 @@ export default function PropertyCard({ property }) {
   return (
     <>
       <motion.div
-        whileHover={{ y: -8, scale: 1.02 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
+        // whileHover={{ y: -8, scale: 1.02 }}
+        // transition={{ duration: 0.3, ease: "easeOut" }}
+        // onHoverStart={() => setIsHovered(true)}
+        // onHoverEnd={() => setIsHovered(false)}
         className="group"
       >
         <Card className="overflow-hidden h-full flex flex-col bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl hover:shadow-gold-500/20 transition-all duration-500 rounded-2xl">

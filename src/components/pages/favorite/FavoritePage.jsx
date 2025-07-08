@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/Card.jsx"
 import { Button } from "@/components/ui/Button.jsx"
 import { Badge } from "@/components/ui/Badge.jsx"
 import { Input } from "@/components/ui/Input.jsx"
-import PropertyCard from "../../property/PropertyCard.jsx"
 import PropertyFilters from "../../property/PropertyFilter.jsx"
 import { useProperty } from "../../../context/PropertyContext.jsx"
 import { useAuth } from "../../../context/AuthContext.jsx"
@@ -26,6 +25,7 @@ import {
   Filter,
   TrendingUp,
 } from "lucide-react"
+import PropertyGrid from "../../property/PropertyGrid.jsx"
 
 export default function Favorites() {
   const { getLikedProperties, toggleLike, filterProperties } = useProperty()
@@ -432,7 +432,7 @@ export default function Favorites() {
       </motion.section>
 
       {/* Properties Grid */}
-      <motion.section variants={containerVariants} initial="hidden" animate="visible" className="py-16">
+      <motion.section variants={containerVariants} initial="hidden" animate="visible" className="py-16 w-full h-full">
         <div className="container mx-auto px-4">
           {filteredProperties.length === 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
@@ -465,18 +465,9 @@ export default function Favorites() {
               </Button>
             </motion.div>
           ) : (
-            <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" : "space-y-8"}>
-              {filteredProperties.map((property, index) => (
-                <motion.div
-                  key={property.id}
-                  variants={itemVariants}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <PropertyCard property={property} />
-                </motion.div>
-              ))}
-            </div>
+
+            <PropertyGrid properties={filteredProperties} />
+
           )}
         </div>
       </motion.section>

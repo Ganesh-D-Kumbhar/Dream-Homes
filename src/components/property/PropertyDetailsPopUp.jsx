@@ -89,7 +89,7 @@ export default function PropertyDetailsPopup({ isOpen, onClose, property }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/70  !w-full !h-full backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={onClose}
           >
             <motion.div

@@ -1,140 +1,22 @@
-// import { createContext, useContext, useState, useEffect } from "react"
-// import { propertiesData } from "../data/globalData"
-// import toast from "react-hot-toast"
-
-
-// const PropertyContext = createContext(undefined)
-
-// export function PropertyProvider({ children }) {
-//   const [properties] = useState(propertiesData)
-//   const [likedProperties, setLikedProperties] = useState([])
-
-//   useEffect(() => {
-//     const user = JSON.parse(localStorage.getItem("user") || "{}")
-//     if (user.id) {
-//       const liked = JSON.parse(localStorage.getItem(`liked_${user.id}`) || "[]")
-//       setLikedProperties(liked)
-//     }
-//   }, [])
-
-//   const toggleLike = (propertyId) => {
-//     const user = JSON.parse(localStorage.getItem("user") || "{}")
-//     if (!user.id) return
-
-//     const isLiked = likedProperties.includes(propertyId)
-//     let newLiked;
-
-//     if (isLiked) {
-//       newLiked = likedProperties.filter((id) => id !== propertyId)
-//       toast.success("Removed from favorites")
-//     } else {
-//       newLiked = [...likedProperties, propertyId]
-//       toast.success("Added to favorites")
-//     }
-
-//     setLikedProperties(newLiked)
-//     localStorage.setItem(`liked_${user.id}`, JSON.stringify(newLiked))
-//   }
-
-//   const getLikedProperties = () => {
-//     return properties.filter((property) => likedProperties.includes(property.id))
-//   }
-
-//   const getPropertyById = (id) => {
-//     return properties.find((property) => property.id === id)
-//   }
-
-//   const filterProperties = (filters)=> {
-//     return properties.filter((property) => {
-//       if (filters.type && filters.type !== "all" && property.type !== filters.type) {
-//         return false
-//       }
-
-//       if (
-//         filters.propertyType &&
-//         filters.propertyType.length > 0 &&
-//         !filters.propertyType.includes(property.propertyType)
-//       ) {
-//         return false
-//       }
-
-//       if (filters.priceRange) {
-//         if (property.price < filters.priceRange.min || property.price > filters.priceRange.max) {
-//           return false
-//         }
-//       }
-
-//       if (
-//         filters.location &&
-//         !property.location.city.toLowerCase().includes(filters.location.toLowerCase()) &&
-//         !property.location.address.toLowerCase().includes(filters.location.toLowerCase())
-//       ) {
-//         return false
-//       }
-
-//       if (filters.petsAllowed !== undefined && property.petsAllowed !== filters.petsAllowed) {
-//         return false
-//       }
-
-//       if (filters.availability && filters.availability !== "all" && property.availability !== filters.availability) {
-//         return false
-//       }
-
-//       return true
-//     })
-//   }
-
-//   return (
-//     <PropertyContext.Provider
-//       value={{
-//         properties,
-//         likedProperties,
-//         toggleLike,
-//         getLikedProperties,
-//         getPropertyById,
-//         filterProperties,
-//       }}
-//     >
-//       {children}
-//     </PropertyContext.Provider>
-//   )
-// }
-
-// export function useProperty() {
-//   const context = useContext(PropertyContext)
-//   if (context === undefined) {
-//     throw new Error("useProperty must be used within a PropertyProvider")
-//   }
-//   return context
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { createContext, useContext, useState, useEffect } from "react"
-import { propertiesData } from "../data/globalData"
+import { propertiesData } from "../data/globalData.js"
 import toast from "react-hot-toast"
+import apiService from "../lib/api.js"
 
 const PropertyContext = createContext(undefined)
 
 export function PropertyProvider({ children }) {
-  const [properties] = useState(propertiesData)
+  const [properties, setProperties] = useState(propertiesData)
+  const [apiProperties, setApiProperties] = useState([])
   const [likedProperties, setLikedProperties] = useState([])
+  const [isLoadingApi, setIsLoadingApi] = useState(false)
 
+  // Load API properties on mount
+  useEffect(() => {
+    loadApiProperties()
+  }, [])
+
+  // Load liked properties from localStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}")
     if (user.id) {
@@ -142,6 +24,41 @@ export function PropertyProvider({ children }) {
       setLikedProperties(liked)
     }
   }, [])
+
+  const loadApiProperties = async () => {
+    try {
+      setIsLoadingApi(true)
+      const response = await apiService.getProperties()
+      if (response.success) {
+        setApiProperties(response.data)
+      }
+    } catch (error) {
+      console.error("Failed to load API properties:", error)
+      // Gracefully handle API failure - continue with local data
+    } finally {
+      setIsLoadingApi(false)
+    }
+  }
+
+  // Refresh properties (for admin updates)
+  const refreshProperties = async () => {
+    await loadApiProperties()
+  }
+
+  // Get all properties (local + API)
+  const getAllProperties = () => {
+    // Combine local properties with API properties
+    // API properties get unique IDs to avoid conflicts
+    const combinedProperties = [
+      ...properties,
+      ...apiProperties.map((prop) => ({
+        ...prop,
+        id: `api_${prop._id}`, // Prefix API properties with 'api_'
+        _id: prop._id, // Keep original MongoDB ID for admin operations
+      })),
+    ]
+    return combinedProperties
+  }
 
   const toggleLike = (propertyId) => {
     const user = JSON.parse(localStorage.getItem("user") || "{}")
@@ -163,15 +80,18 @@ export function PropertyProvider({ children }) {
   }
 
   const getLikedProperties = () => {
-    return properties.filter((property) => likedProperties.includes(property.id))
+    const allProperties = getAllProperties()
+    return allProperties.filter((property) => likedProperties.includes(property.id))
   }
 
   const getPropertyById = (id) => {
-    return properties.find((property) => property.id === id)
+    const allProperties = getAllProperties()
+    return allProperties.find((property) => property.id === id)
   }
 
   const filterProperties = (filters) => {
-    return properties.filter((property) => {
+    const allProperties = getAllProperties()
+    return allProperties.filter((property) => {
       // Type filter (all, buy, rent)
       if (filters.type && filters.type !== "all" && property.type !== filters.type) {
         return false
@@ -243,12 +163,15 @@ export function PropertyProvider({ children }) {
   return (
     <PropertyContext.Provider
       value={{
-        properties,
+        properties: getAllProperties(), // Return combined properties
         likedProperties,
+        isLoadingApi,
         toggleLike,
         getLikedProperties,
         getPropertyById,
         filterProperties,
+        refreshProperties, // For admin to refresh after changes
+        apiProperties, // Separate access to API properties for admin
       }}
     >
       {children}
