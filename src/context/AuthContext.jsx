@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
+
 const AuthContext = createContext(undefined)
 
 export function AuthProvider({ children }) {
@@ -17,7 +18,6 @@ export function AuthProvider({ children }) {
     try {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 500))
-
       const users = JSON.parse(localStorage.getItem("users") || "[]")
       const foundUser = users.find((u) => u.email === email && u.password === password)
 
@@ -40,7 +40,6 @@ export function AuthProvider({ children }) {
     try {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 800))
-
       const users = JSON.parse(localStorage.getItem("users") || "[]")
       const existingUser = users.find((u) => u.email === userData.email)
 

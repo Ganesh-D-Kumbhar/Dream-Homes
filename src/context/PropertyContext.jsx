@@ -6,14 +6,20 @@ import apiService from "../lib/api.js"
 const PropertyContext = createContext(undefined)
 
 export function PropertyProvider({ children }) {
-  const [properties, setProperties] = useState(propertiesData)
+  const [properties, setProperties] = useState(propertiesData) // Start with global data
   const [apiProperties, setApiProperties] = useState([])
   const [likedProperties, setLikedProperties] = useState([])
   const [isLoadingApi, setIsLoadingApi] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
 
-  // Load API properties on mount
+  // Load API properties on mount (after initial render with global data)
   useEffect(() => {
-    loadApiProperties()
+    // Small delay to ensure global data is shown first
+    const timer = setTimeout(() => {
+      loadApiProperties()
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [])
 
   // Load liked properties from localStorage
@@ -31,38 +37,58 @@ export function PropertyProvider({ children }) {
       const response = await apiService.getProperties()
       if (response.success) {
         setApiProperties(response.data)
+        console.log(`✅ Loaded ${response.data.length} properties from API`)
       }
     } catch (error) {
       console.error("Failed to load API properties:", error)
       // Gracefully handle API failure - continue with local data
+      toast.error("Some properties may not be available", { duration: 3000 })
     } finally {
       setIsLoadingApi(false)
+      setIsInitialLoad(false)
     }
   }
 
   // Refresh properties (for admin updates)
   const refreshProperties = async () => {
     await loadApiProperties()
+    toast.success("Properties refreshed!")
   }
 
-  // Get all properties (local + API)
+  // Get all properties (local + API) with proper ID handling
   const getAllProperties = () => {
     // Combine local properties with API properties
-    // API properties get unique IDs to avoid conflicts
     const combinedProperties = [
-      ...properties,
+      ...properties, // Global data properties
       ...apiProperties.map((prop) => ({
         ...prop,
         id: `api_${prop._id}`, // Prefix API properties with 'api_'
         _id: prop._id, // Keep original MongoDB ID for admin operations
+        // Ensure all required fields are present
+        images: prop.images && prop.images.length > 0 ? prop.images : ["/placeholder.svg"],
+        amenities: prop.amenities || [],
+        features: prop.features || ["Modern Design", "Prime Location"],
+        nearbyPlaces: prop.nearbyPlaces || ["Shopping Center", "Public Transport"],
+        dealer: prop.dealer || {
+          name: "Dream Homes",
+          phone: "+1 (555) 123-4567",
+          email: "contact@dreamhomes.com",
+          image: "/placeholder.svg",
+        },
+        yearBuilt: prop.yearBuilt || new Date().getFullYear(),
+        parking: prop.parking || 0,
       })),
     ]
+
     return combinedProperties
   }
 
   const toggleLike = (propertyId) => {
     const user = JSON.parse(localStorage.getItem("user") || "{}")
-    if (!user.id) return
+    if (!user.id) {
+      toast.error("Please login to save favorites")
+      return
+    }
 
     const isLiked = likedProperties.includes(propertyId)
     let newLiked
@@ -114,12 +140,13 @@ export function PropertyProvider({ children }) {
       }
 
       // Location filter
-      if (
-        filters.location &&
-        !property.location.city.toLowerCase().includes(filters.location.toLowerCase()) &&
-        !property.location.address.toLowerCase().includes(filters.location.toLowerCase())
-      ) {
-        return false
+      if (filters.location) {
+        const searchTerm = filters.location.toLowerCase()
+        const cityMatch = property.location.city.toLowerCase().includes(searchTerm)
+        const addressMatch = property.location.address.toLowerCase().includes(searchTerm)
+        if (!cityMatch && !addressMatch) {
+          return false
+        }
       }
 
       // Pets allowed filter
@@ -166,6 +193,7 @@ export function PropertyProvider({ children }) {
         properties: getAllProperties(), // Return combined properties
         likedProperties,
         isLoadingApi,
+        isInitialLoad,
         toggleLike,
         getLikedProperties,
         getPropertyById,

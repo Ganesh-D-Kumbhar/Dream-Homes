@@ -235,7 +235,7 @@ export default function PropertyForm({ property, onSave, onCancel }) {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-slate-800 dark:text-white">
-              <Home className="w-5 h-5 mr-2 text-gold-500" />
+              <Home className="w-5 h-5 mr-2 text-amber-500" />
               Basic Information
             </CardTitle>
           </CardHeader>
@@ -390,7 +390,7 @@ export default function PropertyForm({ property, onSave, onCancel }) {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-slate-800 dark:text-white">
-              <MapPin className="w-5 h-5 mr-2 text-gold-500" />
+              <MapPin className="w-5 h-5 mr-2 text-amber-500" />
               Location Details
             </CardTitle>
           </CardHeader>
@@ -481,7 +481,7 @@ export default function PropertyForm({ property, onSave, onCancel }) {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-slate-800 dark:text-white">
-              <ImageIcon className="w-5 h-5 mr-2 text-gold-500" />
+              <ImageIcon className="w-5 h-5 mr-2 text-amber-500" />
               Property Images
             </CardTitle>
           </CardHeader>
@@ -501,7 +501,7 @@ export default function PropertyForm({ property, onSave, onCancel }) {
                   type="button"
                   variant="outline"
                   onClick={() => document.getElementById("images").click()}
-                  className="w-full h-20 border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-gold-400"
+                  className="w-full h-20 border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-amber-400"
                 >
                   <Upload className="w-6 h-6 mr-2 text-slate-400" />
                   Click to upload images or drag and drop
@@ -600,7 +600,7 @@ export default function PropertyForm({ property, onSave, onCancel }) {
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white"
+            className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white"
           >
             {isLoading ? (
               <div className="flex items-center space-x-2">

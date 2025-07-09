@@ -111,7 +111,7 @@ export default function AboutUs() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative py-32 overflow-hidden"
+        className="relative py-20 overflow-hidden"
       >
         {/* Background Elements */}
         <div className="absolute inset-0 bg-mesh opacity-30"></div>

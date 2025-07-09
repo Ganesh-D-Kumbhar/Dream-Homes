@@ -216,44 +216,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      {/* Header */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative py-12 sm:py-16 lg:py-20 overflow-hidden"
-      >
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-mesh opacity-30"></div>
-        <div className="absolute top-4 sm:top-10 left-4 sm:left-10 w-32 h-32 sm:w-72 sm:h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div
-          className="absolute bottom-4 sm:bottom-10 right-4 sm:right-10 w-32 h-32 sm:w-72 sm:h-72 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"
-          style={{ animationDelay: "2s" }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <Badge className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 sm:px-6 py-2 text-xs sm:text-sm font-semibold shadow-lg mb-4 sm:mb-6">
-              <Crown className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              Premium Member
-            </Badge>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight flex flex-col sm:flex-row items-center justify-center gap-2">
-              My
-              <span className="text-gradient bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
-                Profile
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed px-4">
-              Manage your account settings and preferences
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
-
       {/* Profile Content */}
       <motion.section
         variants={containerVariants}

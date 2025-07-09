@@ -35,10 +35,10 @@ export default function AdminLogin({ onLoginSuccess }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-gold-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-amber-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-4">
       <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm dark:bg-slate-800/80">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-gold-500 to-gold-600 rounded-full flex items-center justify-center">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
             <Shield className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-slate-800 dark:text-white">Super Admin Access</CardTitle>
@@ -60,7 +60,7 @@ export default function AdminLogin({ onLoginSuccess }) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter admin password"
-                  className="pl-10 pr-10 h-12 border-slate-300 dark:border-slate-600 focus:border-gold-500 dark:focus:border-gold-400"
+                  className="pl-10 pr-10 h-12 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-400"
                   disabled={isLoading}
                 />
                 <button
@@ -76,7 +76,7 @@ export default function AdminLogin({ onLoginSuccess }) {
 
             <Button
               type="submit"
-              className="w-full h-12 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+              className="w-full h-12 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
               disabled={isLoading}
             >
               {isLoading ? (

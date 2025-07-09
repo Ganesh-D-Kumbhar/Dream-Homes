@@ -33,14 +33,10 @@ export default function PropertyCard({ property }) {
 
   return (
     <>
-      <motion.div
-        // whileHover={{ y: -8, scale: 1.02 }}
-        // transition={{ duration: 0.3, ease: "easeOut" }}
-        // onHoverStart={() => setIsHovered(true)}
-        // onHoverEnd={() => setIsHovered(false)}
+      <div
         className="group"
       >
-        <Card className="overflow-hidden h-full flex flex-col bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl hover:shadow-gold-500/20 transition-all duration-500 rounded-2xl">
+        <Card className="overflow-hidden h-full flex flex-col bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl hover:shadow-gold-500/20 transition-all duration-500 rounded-2xl group hover:-translate-y-4">
           {/* Image Section */}
           <div className="relative h-64 overflow-hidden">
             <motion.img
@@ -220,7 +216,7 @@ export default function PropertyCard({ property }) {
             </div>
           </CardFooter>
         </Card>
-      </motion.div>
+      </div>
       <PropertyEnquiryForm
         isOpen={showForm}
         onClose={() => setShowForm(false)}
