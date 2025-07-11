@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/Label.jsx"
 import { Card, CardContent } from "@/components/ui/Card.jsx"
 import { Badge } from "@/components/ui/Badge.jsx"
 import { Textarea } from "@/components/ui/Textarea.jsx"
+import axios from "axios"
 import {
   X,
   User,
@@ -25,7 +26,7 @@ import {
 import toast from "react-hot-toast"
 
 const validationSchema = yup.object({
-  fullname: yup.string().min(2, "Name must be at least 2 characters").required("Full name is required"),
+  name: yup.string().min(2, "Name must be at least 2 characters").required("Full name is required"),
   email: yup.string().email("Invalid email address").required("Email is required"),
   phoneno: yup
     .string()
@@ -41,7 +42,7 @@ export default function ContactUsPopup({ isOpen, onClose }) {
 
   const formik = useFormik({
     initialValues: {
-      fullname: "",
+      name: "",
       email: "",
       phoneno: "",
       subject: "",
@@ -51,10 +52,7 @@ export default function ContactUsPopup({ isOpen, onClose }) {
     onSubmit: async (values, { resetForm }) => {
       setIsSubmitting(true);
       try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        const response = await axios.post("/api/main-form", {
+        const response = await axios.post("https://dream-homes-backend.onrender.com/api/main-form", {
           ...values,
           timestamp: new Date().toISOString(),
           type: "contact_us",
@@ -206,7 +204,7 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                           <div className="grid grid-cols-2 gap-3">
                             <div>
                               <Label
-                                htmlFor="fullname"
+                                htmlFor="name"
                                 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1 block"
                               >
                                 Full Name *
@@ -214,19 +212,19 @@ export default function ContactUsPopup({ isOpen, onClose }) {
                               <div className="relative">
                                 <User className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                                 <Input
-                                  id="fullname"
-                                  name="fullname"
+                                  id="name"
+                                  name="name"
                                   type="text"
                                   placeholder="Your name"
-                                  value={formik.values.fullname}
+                                  value={formik.values.name}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
+                                  className={`pl-9 h-9 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-amber-400 rounded-lg text-sm ${formik.touched.name && formik.errors.name ? "ring-2 ring-red-400" : ""
                                     }`}
                                 />
                               </div>
-                              {formik.touched.fullname && formik.errors.fullname && (
-                                <p className="text-red-500 text-xs mt-1">{formik.errors.fullname}</p>
+                              {formik.touched.name && formik.errors.name && (
+                                <p className="text-red-500 text-xs mt-1">{formik.errors.name}</p>
                               )}
                             </div>
 

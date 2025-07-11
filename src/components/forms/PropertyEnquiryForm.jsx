@@ -7,6 +7,7 @@ import { Input } from "../ui/Input.jsx"
 import { Label } from "../ui/Label.jsx"
 import { Card, CardContent } from "../ui/Card.jsx"
 import { Badge } from "../ui/Badge.jsx"
+import axios from "axios"
 import {
   X,
   User,
@@ -18,7 +19,7 @@ import {
   CheckCircle,
   Star,
   MessageSquare,
-  Building2 
+  Building2
 } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -48,22 +49,17 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
       setIsSubmitting(true)
 
       try {
-        // Simulate API call
+        // Simulate API call delay
         await new Promise((resolve) => setTimeout(resolve, 1500))
 
-        const response = await fetch("/api/main-form", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...values,
-            propertyTitle,
-            timestamp: new Date().toISOString(),
-          }),
+        const response = await axios.post("https://dream-homes-backend.onrender.com/api/main-form", {
+          ...values,
+          propertyTitle,
+          type: "contact-type",
+          timestamp: new Date().toISOString(),
         })
 
-        if (response.ok) {
+        if (response.status === 200) {
           setIsSuccess(true)
           toast.success("Thank you! We'll contact you soon!", {
             duration: 4000,
@@ -76,7 +72,6 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
             },
           })
 
-          // Reset form and close popup after success animation
           setTimeout(() => {
             resetForm()
             setIsSuccess(false)
@@ -86,6 +81,7 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
           throw new Error("Failed to submit form")
         }
       } catch (error) {
+        console.error("Form submission error:", error); // Add this
         toast.error("Something went wrong! Please try again.", {
           duration: 4000,
           style: {
@@ -99,7 +95,7 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
       } finally {
         setIsSubmitting(false)
       }
-    },
+    }
   })
 
   const handleClose = (e) => {
@@ -217,9 +213,8 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                                   value={formik.values.fullname}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${
-                                    formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.fullname && formik.errors.fullname && (
@@ -244,9 +239,8 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                                   value={formik.values.email}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${
-                                    formik.touched.email && formik.errors.email ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.email && formik.errors.email ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.email && formik.errors.email && (
@@ -273,9 +267,8 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                                   value={formik.values.phoneno}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${
-                                    formik.touched.phoneno && formik.errors.phoneno ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.phoneno && formik.errors.phoneno ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.phoneno && formik.errors.phoneno && (
@@ -300,9 +293,8 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                                   value={formik.values.city}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${
-                                    formik.touched.city && formik.errors.city ? "ring-2 ring-red-400" : ""
-                                  }`}
+                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.city && formik.errors.city ? "ring-2 ring-red-400" : ""
+                                    }`}
                                 />
                               </div>
                               {formik.touched.city && formik.errors.city && (

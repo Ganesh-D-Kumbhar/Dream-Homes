@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
+import axios from "axios"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -65,7 +66,7 @@ export default function Contact() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      const response = await axios.post("/api/main-form", {
+      const response = await axios.post("https://dream-homes-backend.onrender.com/api/main-form", {
         ...data,
         timestamp: new Date().toISOString(),
         type: "contact_us",
@@ -73,7 +74,13 @@ export default function Contact() {
 
       if (response.status === 200) {
         console.log("Contact form data:", data);
-        toast.success("Message sent successfully! We'll get back to you soon.");
+        toast.success(
+          <>
+            Form submitted successfully! <br />
+            We'll get back to you soon.
+          </>
+        );
+
         reset();
       } else {
         throw new Error("Form submission failed");
@@ -550,15 +557,15 @@ export default function Contact() {
                 Your dream property is just one conversation away. Let's discuss your needs today.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-               <Link to={'/'}>
-                <Button
-                  size="lg"
-                  className="bg-white text-gold-600 hover:bg-gray-100 px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <Building2 className="mr-2 h-6 w-6" />
-                  Browse Properties
-                </Button>
-               </Link>
+                <Link to={'/'}>
+                  <Button
+                    size="lg"
+                    className="bg-white text-gold-600 hover:bg-gray-100 px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Building2 className="mr-2 h-6 w-6" />
+                    Browse Properties
+                  </Button>
+                </Link>
                 <Button
                   size="lg"
                   onClick={() => setIsContactUsOpen(true)}
