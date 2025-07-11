@@ -21,6 +21,19 @@ function App() {
   useEffect(() => {
     const user = localStorage.getItem("user")
     setIsAuthenticated(!!user)
+    // Wake up the backend
+    const pingServer = async () => {
+      try {
+        await fetch("https://portfolio-form-backend-t69y.onrender.com/api/wake-up");
+        // console.log("✅ Backend is awake!");
+      } catch (err) {
+        // console.log("⚠️ Backend still waking up...");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    pingServer();
     setIsLoading(false)
   }, [])
 

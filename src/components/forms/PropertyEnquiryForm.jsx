@@ -39,7 +39,7 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
 
   const formik = useFormik({
     initialValues: {
-      fullname: "",
+      name: "",
       email: "",
       phoneno: "",
       city: "",
@@ -198,7 +198,7 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                               <Label
-                                htmlFor="fullname"
+                                htmlFor="name"
                                 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1 block"
                               >
                                 Full Name *
@@ -206,19 +206,19 @@ export default function PropertyEnquiryForm({ isOpen, onClose, propertyTitle = "
                               <div className="relative">
                                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                                 <Input
-                                  id="fullname"
-                                  name="fullname"
+                                  id="name"
+                                  name="name"
                                   type="text"
-                                  placeholder="Your name"
-                                  value={formik.values.fullname}
+                                  placeholder="Full Name"
+                                  value={formik.values.name}
                                   onChange={formik.handleChange}
                                   onBlur={formik.handleBlur}
-                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.fullname && formik.errors.fullname ? "ring-2 ring-red-400" : ""
+                                  className={`pl-10 h-10 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-gold-400 rounded-lg text-sm ${formik.touched.name && formik.errors.name ? "ring-2 ring-red-400" : ""
                                     }`}
                                 />
                               </div>
-                              {formik.touched.fullname && formik.errors.fullname && (
-                                <p className="text-red-500 text-xs mt-1">{formik.errors.fullname}</p>
+                              {formik.touched.name && formik.errors.name && (
+                                <p className="text-red-500 text-xs mt-1">{formik.errors.name}</p>
                               )}
                             </div>
 
