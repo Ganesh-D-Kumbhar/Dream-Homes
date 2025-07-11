@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000/api"
+// const API_BASE_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000/api"
+const API_BASE_URL = "https://dream-homes-backend.onrender.com/api"
 
 class ApiService {
   constructor() {
