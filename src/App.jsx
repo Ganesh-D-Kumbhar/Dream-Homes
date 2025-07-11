@@ -24,7 +24,7 @@ function App() {
     // Wake up the backend
     const pingServer = async () => {
       try {
-        await fetch("https://portfolio-form-backend-t69y.onrender.com/api/wake-up");
+        await fetch("https://dream-homes-backend.onrender.com/api/wake-up");
         // console.log("✅ Backend is awake!");
       } catch (err) {
         // console.log("⚠️ Backend still waking up...");
