@@ -125,20 +125,37 @@ export default function PropertyForm({ property, onSave, onCancel }) {
     }
   }
 
-  const removeImage = (index) => {
-    setImagePreview((prev) => prev.filter((_, i) => i !== index))
-    if (index < formData.images.length) {
-      // Removing existing image
-      setFormData((prev) => ({
-        ...prev,
-        images: prev.images.filter((_, i) => i !== index),
-      }))
-    } else {
-      // Removing new image
-      const newImageIndex = index - formData.images.length
-      setSelectedImages((prev) => prev.filter((_, i) => i !== newImageIndex))
+const removeImage = async (index) => {
+  const isExistingImage = index < formData.images.length
+
+  const confirmed = window.confirm("Are you sure you want to delete this image?")
+  if (!confirmed) return
+
+  if (isExistingImage) {
+    const imageUrlToRemove = formData.images[index]
+
+    try {
+      const res = await apiService.deletePropertyImage(property._id, imageUrlToRemove)
+      if (res.success) {
+        toast.success("Image removed")
+        setFormData((prev) => ({
+          ...prev,
+          images: prev.images.filter((_, i) => i !== index),
+        }))
+        setImagePreview((prev) => prev.filter((_, i) => i !== index))
+      } else {
+        toast.error("Failed to remove image")
+      }
+    } catch (error) {
+      toast.error("Error removing image")
     }
+  } else {
+    const newImageIndex = index - formData.images.length
+    setSelectedImages((prev) => prev.filter((_, i) => i !== newImageIndex))
+    setImagePreview((prev) => prev.filter((_, i) => i !== index))
   }
+}
+
 
   const addAmenity = () => {
     if (newAmenity.trim() && !formData.amenities.includes(newAmenity.trim())) {

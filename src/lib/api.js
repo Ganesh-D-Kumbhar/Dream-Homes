@@ -1,5 +1,5 @@
-// const API_BASE_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000/api"
-const API_BASE_URL = "https://dream-homes-backend.onrender.com/api"
+const API_BASE_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000/api"
+// const API_BASE_URL = "https://dream-homes-backend.onrender.com/api"
 
 class ApiService {
   constructor() {
@@ -74,6 +74,14 @@ class ApiService {
     const url = `/properties${queryString ? `?${queryString}` : ""}`
     return this.makeRequest(url)
   }
+
+  async deletePropertyImage(propertyId, imageUrl) {
+    return this.makeRequest(`/admin/properties/${propertyId}/image`, {
+      method: "DELETE",
+      body: JSON.stringify({ imageUrl }),
+    })
+  }
+
 
   async getProperty(id) {
     return this.makeRequest(`/properties/${id}`)
@@ -179,5 +187,8 @@ class ApiService {
     localStorage.removeItem("adminAuth")
   }
 }
+
+
+
 
 export default new ApiService()
