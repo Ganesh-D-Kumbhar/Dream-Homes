@@ -68,6 +68,39 @@ class ApiService {
     }
   }
 
+  // User Authentication Methods
+  async registerUser(userData) {
+    return this.makeRequest("/users/register", {
+      method: "POST",
+      body: JSON.stringify(userData),
+    })
+  }
+
+  async loginUser(email, password) {
+    return this.makeRequest("/users/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    })
+  }
+
+  async updateUserProfile(userId, userData) {
+    return this.makeRequest(`/users/profile/${userId}`, {
+      method: "PUT",
+      body: JSON.stringify(userData),
+    })
+  }
+
+  async updateUserPassword(userId, passwordData) {
+    return this.makeRequest(`/users/password/${userId}`, {
+      method: "PUT",
+      body: JSON.stringify(passwordData),
+    })
+  }
+
+  async getUserProfile(userId) {
+    return this.makeRequest(`/users/profile/${userId}`)
+  }
+
   // Public API methods
   async getProperties(params = {}) {
     const queryString = new URLSearchParams(params).toString()
@@ -81,7 +114,6 @@ class ApiService {
       body: JSON.stringify({ imageUrl }),
     })
   }
-
 
   async getProperty(id) {
     return this.makeRequest(`/properties/${id}`)
@@ -159,7 +191,6 @@ class ApiService {
   async uploadImage(imageFile) {
     const formData = new FormData()
     formData.append("image", imageFile)
-
     return this.makeFormRequest("/upload", formData)
   }
 
@@ -187,8 +218,5 @@ class ApiService {
     localStorage.removeItem("adminAuth")
   }
 }
-
-
-
 
 export default new ApiService()

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react"
+import apiService from "../lib/api.js"
 
 const AuthContext = createContext(undefined)
 
@@ -16,16 +17,13 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      const users = JSON.parse(localStorage.getItem("users") || "[]")
-      const foundUser = users.find((u) => u.email === email && u.password === password)
+      const response = await apiService.loginUser(email, password)
 
-      if (foundUser) {
-        const { password: _, ...userWithoutPassword } = foundUser
-        setUser(userWithoutPassword)
+      if (response.success) {
+        const userData = response.data
+        setUser(userData)
         setIsAuthenticated(true)
-        localStorage.setItem("user", JSON.stringify(userWithoutPassword))
+        localStorage.setItem("user", JSON.stringify(userData))
         return true
       } else {
         return false
@@ -38,34 +36,17 @@ export function AuthProvider({ children }) {
 
   const signup = async (userData) => {
     try {
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      const users = JSON.parse(localStorage.getItem("users") || "[]")
-      const existingUser = users.find((u) => u.email === userData.email)
+      const response = await apiService.registerUser(userData)
 
-      if (existingUser) {
+      if (response.success) {
+        const newUser = response.data
+        setUser(newUser)
+        setIsAuthenticated(true)
+        localStorage.setItem("user", JSON.stringify(newUser))
+        return true
+      } else {
         return false
       }
-
-      const newUser = {
-        ...userData,
-        id: Date.now().toString(),
-        profilePic: null,
-        preferences: {
-          propertyType: [],
-          priceRange: { min: 0, max: 10000000 },
-          location: [],
-        },
-      }
-
-      users.push(newUser)
-      localStorage.setItem("users", JSON.stringify(users))
-
-      const { password: _, ...userWithoutPassword } = newUser
-      setUser(userWithoutPassword)
-      setIsAuthenticated(true)
-      localStorage.setItem("user", JSON.stringify(userWithoutPassword))
-      return true
     } catch (error) {
       console.error("Signup error:", error)
       return false
@@ -78,20 +59,46 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user")
   }
 
-  const updateProfile = (userData) => {
+  const updateProfile = async (userData) => {
     if (user) {
-      const updatedUser = { ...user, ...userData }
-      setUser(updatedUser)
-      localStorage.setItem("user", JSON.stringify(updatedUser))
+      try {
+        const response = await apiService.updateUserProfile(user._id, userData)
 
-      // Update in users array
-      const users = JSON.parse(localStorage.getItem("users") || "[]")
-      const userIndex = users.findIndex((u) => u.id === user.id)
-      if (userIndex !== -1) {
-        users[userIndex] = { ...users[userIndex], ...userData }
-        localStorage.setItem("users", JSON.stringify(users))
+        if (response.success) {
+          const updatedUser = response.data
+          setUser(updatedUser)
+          localStorage.setItem("user", JSON.stringify(updatedUser))
+          return true
+        }
+        return false
+      } catch (error) {
+        console.error("Update profile error:", error)
+
+        // Fallback to local update for profile pic and other non-critical updates
+        const updatedUser = { ...user, ...userData }
+        setUser(updatedUser)
+        localStorage.setItem("user", JSON.stringify(updatedUser))
+        return true
       }
     }
+    return false
+  }
+
+  const updatePassword = async (currentPassword, newPassword) => {
+    if (user) {
+      try {
+        const response = await apiService.updateUserPassword(user._id, {
+          currentPassword,
+          newPassword,
+        })
+
+        return response.success
+      } catch (error) {
+        console.error("Update password error:", error)
+        return false
+      }
+    }
+    return false
   }
 
   return (
@@ -102,6 +109,7 @@ export function AuthProvider({ children }) {
         signup,
         logout,
         updateProfile,
+        updatePassword,
         isAuthenticated,
       }}
     >

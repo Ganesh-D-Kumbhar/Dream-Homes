@@ -30,6 +30,7 @@ import {
 } from "lucide-react"
 import toast from "react-hot-toast"
 
+
 const profileSchema = yup.object({
   name: yup.string().min(2, "Name must be at least 2 characters").required("Name is required"),
   phone: yup.string().matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
@@ -45,7 +46,7 @@ const passwordSchema = yup.object({
 })
 
 export default function ProfilePage() {
-  const { user, updateProfile } = useAuth()
+  const { user, updateProfile, updatePassword } = useAuth()
   const [activeTab, setActiveTab] = useState("profile")
   const [isUpdating, setIsUpdating] = useState(false)
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -78,11 +79,11 @@ export default function ProfilePage() {
         toast.error("Image size should be less than 5MB")
         return
       }
+
       const reader = new FileReader()
       reader.onload = (e) => {
         setProfileImage(e.target.result)
         updateProfile({ profilePic: e.target.result })
-        // Single toast notification for image upload
         toast.success("Profile image updated successfully!", {
           duration: 3000,
           style: {
@@ -102,19 +103,32 @@ export default function ProfilePage() {
     setIsUpdating(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      updateProfile(data)
-      // Single toast notification for profile update
-      toast.success("Profile updated successfully!", {
-        duration: 3000,
-        style: {
-          background: "white",
-          color: "black",
-          border: "1px solid black",
-          fontWeight: "600",
-          borderRadius: "12px",
-          padding: "16px",
-        },
-      })
+      const success = await updateProfile(data)
+
+      if (success) {
+        toast.success("Profile updated successfully!", {
+          duration: 3000,
+          style: {
+            background: "white",
+            color: "black",
+            border: "1px solid black",
+            fontWeight: "600",
+            borderRadius: "12px",
+            padding: "16px",
+          },
+        })
+      } else {
+        toast.error("Failed to update profile", {
+          duration: 3000,
+          style: {
+            background: "#EF4444",
+            color: "#fff",
+            fontWeight: "600",
+            borderRadius: "12px",
+            padding: "16px",
+          },
+        })
+      }
     } catch (error) {
       toast.error("Failed to update profile", {
         duration: 3000,
@@ -135,14 +149,10 @@ export default function ProfilePage() {
     setIsUpdating(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500))
-      // Simulate password verification
-      const users = JSON.parse(localStorage.getItem("users") || "[]")
-      const currentUser = users.find((u) => u.id === user.id)
 
-      if (currentUser && currentUser.password === data.currentPassword) {
-        // Update password
-        const updatedUsers = users.map((u) => (u.id === user.id ? { ...u, password: data.newPassword } : u))
-        localStorage.setItem("users", JSON.stringify(updatedUsers))
+      const success = await updatePassword(data.currentPassword, data.newPassword)
+
+      if (success) {
         passwordForm.reset()
         toast.success("Password updated successfully!", {
           duration: 3000,
@@ -263,6 +273,7 @@ export default function ProfilePage() {
                       Verified Member
                     </Badge>
                   </div>
+
                   {/* Stats */}
                   <div className="space-y-3 sm:space-y-4">
                     {stats.map((stat, index) => (
@@ -300,10 +311,11 @@ export default function ProfilePage() {
                         key={tab.id}
                         variant="ghost"
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex-1 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm h-10 sm:h-auto ${activeTab === tab.id
+                        className={`flex-1 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm h-10 sm:h-auto ${
+                          activeTab === tab.id
                             ? "bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-lg"
                             : "text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-                          }`}
+                        }`}
                       >
                         <tab.icon className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                         <span className="hidden sm:inline">{tab.label}</span>
@@ -312,6 +324,7 @@ export default function ProfilePage() {
                     ))}
                   </div>
                 </CardHeader>
+
                 <CardContent className="p-4 sm:p-6 lg:p-8">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -345,8 +358,9 @@ export default function ProfilePage() {
                                     <Input
                                       id="name"
                                       {...profileForm.register("name")}
-                                      className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${profileForm.formState.errors.name ? "ring-2 ring-red-400" : ""
-                                        }`}
+                                      className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
+                                        profileForm.formState.errors.name ? "ring-2 ring-red-400" : ""
+                                      }`}
                                     />
                                   </div>
                                   {profileForm.formState.errors.name && (
@@ -385,8 +399,9 @@ export default function ProfilePage() {
                                     type="tel"
                                     placeholder="Enter 10-digit phone number"
                                     {...profileForm.register("phone")}
-                                    className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${profileForm.formState.errors.phone ? "ring-2 ring-red-400" : ""
-                                      }`}
+                                    className={`pl-10 sm:pl-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
+                                      profileForm.formState.errors.phone ? "ring-2 ring-red-400" : ""
+                                    }`}
                                   />
                                 </div>
                                 {profileForm.formState.errors.phone && (
@@ -416,6 +431,7 @@ export default function ProfilePage() {
                           </div>
                         </div>
                       )}
+
                       {activeTab === "security" && (
                         <div className="space-y-6 sm:space-y-8">
                           <div>
@@ -441,8 +457,9 @@ export default function ProfilePage() {
                                     type={showCurrentPassword ? "text" : "password"}
                                     placeholder="Enter current password"
                                     {...passwordForm.register("currentPassword")}
-                                    className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.currentPassword ? "ring-2 ring-red-400" : ""
-                                      }`}
+                                    className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
+                                      passwordForm.formState.errors.currentPassword ? "ring-2 ring-red-400" : ""
+                                    }`}
                                   />
                                   <Button
                                     type="button"
@@ -479,8 +496,9 @@ export default function ProfilePage() {
                                       type={showNewPassword ? "text" : "password"}
                                       placeholder="Enter new password"
                                       {...passwordForm.register("newPassword")}
-                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.newPassword ? "ring-2 ring-red-400" : ""
-                                        }`}
+                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
+                                        passwordForm.formState.errors.newPassword ? "ring-2 ring-red-400" : ""
+                                      }`}
                                     />
                                     <Button
                                       type="button"
@@ -516,8 +534,9 @@ export default function ProfilePage() {
                                       type={showConfirmPassword ? "text" : "password"}
                                       placeholder="Confirm new password"
                                       {...passwordForm.register("confirmPassword")}
-                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${passwordForm.formState.errors.confirmPassword ? "ring-2 ring-red-400" : ""
-                                        }`}
+                                      className={`pl-10 sm:pl-12 pr-10 sm:pr-12 h-10 sm:h-12 bg-slate-50 dark:bg-slate-700 border-0 focus:ring-2 focus:ring-yellow-400 rounded-xl text-sm sm:text-base ${
+                                        passwordForm.formState.errors.confirmPassword ? "ring-2 ring-red-400" : ""
+                                      }`}
                                     />
                                     <Button
                                       type="button"
@@ -559,6 +578,7 @@ export default function ProfilePage() {
                               </Button>
                             </form>
                           </div>
+
                           {/* Security Info */}
                           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 sm:p-6 rounded-2xl border border-blue-200/50 dark:border-blue-700/50">
                             <h4 className="text-base sm:text-lg font-semibold text-blue-800 dark:text-blue-300 mb-3 flex items-center gap-2">
@@ -574,6 +594,7 @@ export default function ProfilePage() {
                           </div>
                         </div>
                       )}
+
                       {activeTab === "preferences" && (
                         <div className="space-y-6 sm:space-y-8">
                           <div>

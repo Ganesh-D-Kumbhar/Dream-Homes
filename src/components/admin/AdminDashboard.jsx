@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/Card.jsx"
-import { Button } from "../ui/Button.jsx"
-import { Badge } from "../ui/Badge.jsx"
-import { Home, Plus, TrendingUp, DollarSign, Building, Key, MapPin, Clock } from "lucide-react"
+import { Building, Clock, DollarSign, Home, Key, MapPin, Plus, TrendingUp } from "lucide-react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import apiService from "../../lib/api.js"
+import { Badge } from "../ui/Badge.jsx"
+import { Button } from "../ui/Button.jsx"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/Card.jsx"
+
 
 export default function AdminDashboard({ onNavigate }) {
   const [stats, setStats] = useState(null)
@@ -18,8 +19,9 @@ export default function AdminDashboard({ onNavigate }) {
     try {
       setIsLoading(true)
       const response = await apiService.getAdminStats()
+      console.log("Stats response:", response) // Debug log
       if (response.success) {
-        setStats(response.data)
+        setStats(response.data) // Fixed: directly use response.data instead of response.data.stats
       }
     } catch (error) {
       toast.error("Failed to load dashboard statistics")
@@ -144,7 +146,7 @@ export default function AdminDashboard({ onNavigate }) {
                     <h4 className="font-semibold text-slate-800 dark:text-white">{property.title}</h4>
                     <div className="flex items-center text-sm text-slate-600 dark:text-slate-300 mt-1">
                       <MapPin className="w-3 h-3 mr-1" />
-                      {property.location?.city}
+                      {property.location?.city || "Location not specified"}
                     </div>
                   </div>
                   <div className="text-right">
@@ -187,7 +189,6 @@ export default function AdminDashboard({ onNavigate }) {
               <Plus className="w-6 h-6 text-gold-500" />
               <span>Add Property</span>
             </Button>
-
             <Button
               onClick={() => onNavigate("manage")}
               variant="outline"
@@ -196,7 +197,6 @@ export default function AdminDashboard({ onNavigate }) {
               <Home className="w-6 h-6 text-blue-500" />
               <span>Manage Properties</span>
             </Button>
-
             <Button
               onClick={loadStats}
               variant="outline"
