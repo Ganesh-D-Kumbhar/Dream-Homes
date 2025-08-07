@@ -353,7 +353,7 @@ export function PropertyProvider({ children }) {
       
       setLikedProperties(newLiked)
       localStorage.setItem(`liked_guest`, JSON.stringify(newLiked))
-      toast.error("Please login to save favorites permanently", { duration: 4000 })
+      // toast.error("Please login to save favorites permanently", { duration: 4000 })
       return
     }
 
