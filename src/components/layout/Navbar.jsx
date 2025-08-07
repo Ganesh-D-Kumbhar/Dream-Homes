@@ -244,7 +244,7 @@ export default function Navbar() {
                   <Heart className="h-5 w-5 text-red-600" />
                   <span className="font-medium">My Favorites</span>
                   <Badge className="bg-red-100 text-red-700 dark:bg-red-900 dark:text-white text-xs ml-auto">
-                    3
+                   {likedProperties.length}
                   </Badge>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="my-2" />
