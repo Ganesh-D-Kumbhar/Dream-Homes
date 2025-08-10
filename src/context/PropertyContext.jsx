@@ -1,5 +1,3 @@
-"use client"
-
 import { createContext, useContext, useState, useEffect } from "react"
 import { propertiesData } from "../data/globalData.js"
 import toast from "react-hot-toast"
@@ -13,7 +11,7 @@ export function PropertyProvider({ children }) {
   const [likedProperties, setLikedProperties] = useState([])
   const [isLoadingApi, setIsLoadingApi] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
-  const [isLoadingLikes, setIsLoadingLikes] = useState(false) // NEW: Add this line
+  const [isLoadingLikes, setIsLoadingLikes] = useState(false)
 
   // Load API properties on mount (after initial render with global data)
   useEffect(() => {
@@ -24,7 +22,7 @@ export function PropertyProvider({ children }) {
     return () => clearTimeout(timer)
   }, [])
 
-  // MODIFIED: Update this useEffect
+  // Load liked properties when component mounts
   useEffect(() => {
     loadLikedProperties()
   }, [])
@@ -47,11 +45,11 @@ export function PropertyProvider({ children }) {
     }
   }
 
-  // NEW: Add this function
   const loadLikedProperties = async () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}")
-    if (!user.id) {
-      // If no user, load from localStorage as fallback
+
+    if (!user._id) {
+      // If no user, load from localStorage as fallback for guest users
       const localLiked = JSON.parse(localStorage.getItem(`liked_guest`) || "[]")
       setLikedProperties(localLiked)
       return
@@ -59,22 +57,21 @@ export function PropertyProvider({ children }) {
 
     try {
       setIsLoadingLikes(true)
-      // Try to load from backend first
-      const response = await apiService.getUserLikedProperties(user.id)
+      // Load from database for logged-in users
+      const response = await apiService.getUserLikedProperties(user._id)
+
       if (response.success) {
-        setLikedProperties(response.data.likedProperties)
-        // Sync with localStorage for offline access
-        localStorage.setItem(`liked_${user.id}`, JSON.stringify(response.data.likedProperties))
+        setLikedProperties(response.data.likedProperties || [])
+        console.log(`✅ Loaded ${response.data.likedProperties?.length || 0} liked properties from database`)
       } else {
-        // Fallback to localStorage if backend fails
-        const localLiked = JSON.parse(localStorage.getItem(`liked_${user.id}`) || "[]")
-        setLikedProperties(localLiked)
+        console.error("Failed to load liked properties:", response.message)
+        setLikedProperties([])
       }
     } catch (error) {
       console.error("Failed to load liked properties from backend:", error)
-      // Fallback to localStorage
-      const localLiked = JSON.parse(localStorage.getItem(`liked_${user.id}`) || "[]")
-      setLikedProperties(localLiked)
+      // Don't fallback to localStorage for logged-in users to maintain data consistency
+      setLikedProperties([])
+      toast.error("Failed to load your favorites")
     } finally {
       setIsLoadingLikes(false)
     }
@@ -113,11 +110,10 @@ export function PropertyProvider({ children }) {
     return combinedProperties
   }
 
-  // MODIFIED: Update this function
   const toggleLike = async (propertyId) => {
     const user = JSON.parse(localStorage.getItem("user") || "{}")
 
-    if (!user.id) {
+    if (!user._id) {
       // Handle guest users with localStorage only
       const isLiked = likedProperties.includes(propertyId)
       let newLiked
@@ -132,38 +128,26 @@ export function PropertyProvider({ children }) {
 
       setLikedProperties(newLiked)
       localStorage.setItem(`liked_guest`, JSON.stringify(newLiked))
+      toast.error("Please login to save favorites permanently", { duration: 4000 })
       return
     }
 
     try {
-      // Update backend first for logged-in users
-      const response = await apiService.togglePropertyLike(user.id, propertyId)
+      // Update database for logged-in users
+      console.log(`🔄 Toggling like for property ${propertyId} for user ${user._id}`)
+      const response = await apiService.togglePropertyLike(user._id, propertyId)
 
       if (response.success) {
-        setLikedProperties(response.data.likedProperties)
-        // Sync with localStorage
-        localStorage.setItem(`liked_${user.id}`, JSON.stringify(response.data.likedProperties))
+        setLikedProperties(response.data.likedProperties || [])
         toast.success(response.message)
+        console.log(`✅ Successfully updated liked properties in database`)
       } else {
         toast.error(response.message || "Failed to update favorites")
+        console.error("Failed to toggle like:", response.message)
       }
     } catch (error) {
       console.error("Failed to toggle like:", error)
-      // Fallback to localStorage update
-      const isLiked = likedProperties.includes(propertyId)
-      let newLiked
-
-      if (isLiked) {
-        newLiked = likedProperties.filter((id) => id !== propertyId)
-        toast.success("Removed from favorites (offline)")
-      } else {
-        newLiked = [...likedProperties, propertyId]
-        toast.success("Added to favorites (offline)")
-      }
-
-      setLikedProperties(newLiked)
-      localStorage.setItem(`liked_${user.id}`, JSON.stringify(newLiked))
-      toast.error("Changes saved locally. Will sync when online.", { duration: 3000 })
+      toast.error("Failed to update favorites. Please try again.")
     }
   }
 
@@ -249,27 +233,33 @@ export function PropertyProvider({ children }) {
     })
   }
 
-  // NEW: Add this function
+  // Sync liked properties when user logs in (merge guest favorites with user account)
   const syncLikedProperties = async (userId) => {
     try {
-      // Get local liked properties
-      const localLiked = JSON.parse(localStorage.getItem(`liked_${userId}`) || "[]")
+      console.log(`🔄 Syncing liked properties for user ${userId}`)
+
+      // Get guest liked properties
       const guestLiked = JSON.parse(localStorage.getItem(`liked_guest`) || "[]")
 
-      // Combine guest and user liked properties
-      const combinedLiked = [...new Set([...localLiked, ...guestLiked])]
+      if (guestLiked.length > 0) {
+        // Get current user liked properties from database
+        const response = await apiService.getUserLikedProperties(userId)
+        const currentLiked = response.success ? response.data.likedProperties || [] : []
 
-      if (combinedLiked.length > 0) {
-        // Update backend with combined liked properties
-        const response = await apiService.updateUserProfile(userId, {
+        // Combine guest and current user liked properties (remove duplicates)
+        const combinedLiked = [...new Set([...currentLiked, ...guestLiked])]
+
+        // Update user profile with combined liked properties
+        const updateResponse = await apiService.updateUserProfile(userId, {
           likedProperties: combinedLiked,
         })
 
-        if (response.success) {
+        if (updateResponse.success) {
           setLikedProperties(combinedLiked)
-          localStorage.setItem(`liked_${userId}`, JSON.stringify(combinedLiked))
           // Clear guest liked properties
           localStorage.removeItem(`liked_guest`)
+          toast.success("Your favorites have been synced!")
+          console.log(`✅ Successfully synced ${combinedLiked.length} liked properties`)
         }
       }
 
@@ -277,6 +267,7 @@ export function PropertyProvider({ children }) {
       await loadLikedProperties()
     } catch (error) {
       console.error("Failed to sync liked properties:", error)
+      toast.error("Failed to sync your favorites")
     }
   }
 
@@ -287,15 +278,15 @@ export function PropertyProvider({ children }) {
         likedProperties,
         isLoadingApi,
         isInitialLoad,
-        isLoadingLikes, // NEW: Add this
+        isLoadingLikes,
         toggleLike,
         getLikedProperties,
         getPropertyById,
         filterProperties,
         refreshProperties, // For admin to refresh after changes
         apiProperties, // Separate access to API properties for admin
-        syncLikedProperties, // NEW: Add this
-        loadLikedProperties, // NEW: Add this
+        syncLikedProperties,
+        loadLikedProperties,
       }}
     >
       {children}
