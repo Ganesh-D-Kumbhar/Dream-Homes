@@ -195,7 +195,7 @@ export default function PropertyCard({ property }) {
                 View Details
               </Button>
 
-              <motion.div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex gap-2">
                 <Button
                   variant="outline"
                   size="icon"
@@ -212,7 +212,7 @@ export default function PropertyCard({ property }) {
                 >
                   <MessageCircle className="h-4 w-4" />
                 </Button>
-              </motion.div>
+              </div>
             </div>
           </CardFooter>
         </Card>
